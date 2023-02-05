@@ -3,6 +3,8 @@ import { useEffect } from "react";
 import FormOne from "./FormOne";
 import FormTwo from "./FormTwo";
 import FormThree from "./FormThree";
+import { Link } from "react-router-dom";
+import DynamicResumeDisplay from "./DynamicResumeDisplay";
 
 function FormAndResume(props) {
     const { currentForm, setCurrentForm, newFormVal } = props;
@@ -17,23 +19,22 @@ function FormAndResume(props) {
         }
     });
     const availableForms = {
-        1:<FormOne currentForm={currentForm} setCurrentForm={setCurrentForm}/>,
-        2:<FormTwo currentForm={currentForm} setCurrentForm={setCurrentForm}/>,
-        3:<FormThree currentForm={currentForm} setCurrentForm={setCurrentForm}/>
+        1:<FormOne currentForm={currentForm} setCurrentForm={setCurrentForm} completeData={props.completeData} setCompleteData={props.setCompleteData}/>,
+        2:<FormTwo currentForm={currentForm} setCurrentForm={setCurrentForm} completeData={props.completeData} setCompleteData={props.setCompleteData}/>,
+        3:<FormThree currentForm={currentForm} setCurrentForm={setCurrentForm} completeData={props.completeData} setCompleteData={props.setCompleteData}/>
     }
     if(currentForm===newFormVal){
         return (
             <div className="form-resume-cont">
                 <div className="current-form-cont">
                     <div className="progression-header">
+                        <Link to="/" className="go-back-button-header no-annoying-style"><img src="/images/lesserthan.svg"/></Link>
                         <h1>{headerText[currentForm]}</h1>
                         <span>{currentForm}/3</span>
                     </div>
                     {availableForms[currentForm]}
                 </div>
-                <div className="dynamic-resume-display">
-    
-                </div>    
+                <DynamicResumeDisplay completeData={props.completeData} />   
             </div>
         );
     }

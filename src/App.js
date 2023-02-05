@@ -5,7 +5,7 @@ import FormAndResume from './components/FormAndResume';
 
 
 function App() {
-  const [ stateOfValidations, setStateOfValidations] = useState({
+  const [ completeData, setCompleteData] = useState({
     firstFormData: {},
     secondFormData: {},
     lastFormData: {}
@@ -20,9 +20,9 @@ function App() {
         <Route exact path="/home" element={<GreetingPage currentForm={currentForm} setCurrentForm={setCurrentForm}/>} />
 
         {/*forms*/}
-        <Route exact path="/resumeForms/1" element={<FormAndResume currentForm={currentForm} setCurrentForm={setCurrentForm} newFormVal={1} />}/>
-        <Route exact path="/resumeForms/2" element={<FormAndResume currentForm={currentForm} setCurrentForm={setCurrentForm} newFormVal={2} />}/>
-        <Route exact path="/resumeForms/3" element={<FormAndResume currentForm={currentForm} setCurrentForm={setCurrentForm} newFormVal={3} />}/>
+        <Route exact path="/resumeForms/1" element={<FormAndResume currentForm={currentForm} setCurrentForm={setCurrentForm} newFormVal={1} completeData={completeData} setCompleteData={setCompleteData}/>}/>
+        <Route exact path="/resumeForms/2" element={<FormAndResume currentForm={currentForm} setCurrentForm={setCurrentForm} newFormVal={2} completeData={completeData} setCompleteData={setCompleteData}/>}/>
+        <Route exact path="/resumeForms/3" element={<FormAndResume currentForm={currentForm} setCurrentForm={setCurrentForm} newFormVal={3} completeData={completeData} setCompleteData={setCompleteData}/>}/>
 
       </Routes>
     </div>
