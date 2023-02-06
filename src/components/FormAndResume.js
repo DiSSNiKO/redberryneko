@@ -7,34 +7,34 @@ import { Link } from "react-router-dom";
 import DynamicResumeDisplay from "./DynamicResumeDisplay";
 
 function FormAndResume(props) {
-    const { currentForm, setCurrentForm, newFormVal } = props;
+    const { currentForm, setCurrentForm, newFormVal, readyForSubmission, setReadyForSubmission } = props;
     const headerText = {
-        1:"პირადი ინფო",
-        2:"გამოცდილება",
-        3:"განათლება"
+        1: "პირადი ინფო",
+        2: "გამოცდილება",
+        3: "განათლება"
     }
-    useEffect(()=>{
-        if(currentForm!==newFormVal){
+    useEffect(() => {
+        if (currentForm !== newFormVal) {
             setCurrentForm(newFormVal);
         }
     });
     const availableForms = {
-        1:<FormOne currentForm={currentForm} setCurrentForm={setCurrentForm} completeData={props.completeData} setCompleteData={props.setCompleteData}/>,
-        2:<FormTwo currentForm={currentForm} setCurrentForm={setCurrentForm} completeData={props.completeData} setCompleteData={props.setCompleteData}/>,
-        3:<FormThree currentForm={currentForm} setCurrentForm={setCurrentForm} completeData={props.completeData} setCompleteData={props.setCompleteData}/>
+        1: <FormOne readyForSubmission={readyForSubmission} setReadyForSubmission={setReadyForSubmission} currentForm={currentForm} setCurrentForm={setCurrentForm} completeData={props.completeData} setCompleteData={props.setCompleteData} />,
+        2: <FormTwo readyForSubmission={readyForSubmission} setReadyForSubmission={setReadyForSubmission} currentForm={currentForm} setCurrentForm={setCurrentForm} completeData={props.completeData} setCompleteData={props.setCompleteData} />,
+        3: <FormThree readyForSubmission={readyForSubmission} setReadyForSubmission={setReadyForSubmission} currentForm={currentForm} setCurrentForm={setCurrentForm} completeData={props.completeData} setCompleteData={props.setCompleteData} />
     }
-    if(currentForm===newFormVal){
+    if (currentForm === newFormVal) {
         return (
             <div className="form-resume-cont">
                 <div className="current-form-cont">
                     <div className="progression-header">
-                        <Link to="/" className="go-back-button-header no-annoying-style"><img src="/images/lesserthan.svg"/></Link>
+                        <Link to="/" className="go-back-button-header no-annoying-style"><img src="/images/lesserthan.svg" /></Link>
                         <h1>{headerText[currentForm]}</h1>
                         <span>{currentForm}/3</span>
                     </div>
                     {availableForms[currentForm]}
                 </div>
-                <DynamicResumeDisplay completeData={props.completeData} />   
+                <DynamicResumeDisplay completeData={props.completeData} />
             </div>
         );
     }
