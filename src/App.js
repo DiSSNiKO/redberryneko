@@ -5,11 +5,15 @@ import FormAndResume from './components/FormAndResume';
 
 
 function App() {
-  const [completeData, setCompleteData] = useState({
+  const emptyCompleteData = {
     firstFormData: {},
     secondFormData: {},
     lastFormData: {}
-  });
+  }
+  const [completeData, setCompleteData] = useState(
+    // _VARNAME data with validation, just VARNAME is optional data.
+    JSON.parse(sessionStorage.getItem("completeData")) || emptyCompleteData
+  );
   const [readyForSubmission, setReadyForSubmission] = useState({
     privateInfoValidated: false,
     workExpValidated: false,
@@ -21,8 +25,8 @@ function App() {
       <Routes>
 
         {/*greeting page*/}
-        <Route exact path="/" element={<GreetingPage currentForm={currentForm} setCurrentForm={setCurrentForm} />} />
-        <Route exact path="/home" element={<GreetingPage currentForm={currentForm} setCurrentForm={setCurrentForm} />} />
+        <Route exact path="/" element={<GreetingPage currentForm={currentForm} setCurrentForm={setCurrentForm} setCompleteData={setCompleteData} />} />
+        <Route exact path="/home" element={<GreetingPage currentForm={currentForm} setCurrentForm={setCurrentForm} setCompleteData={setCompleteData} />} />
 
         {/*forms*/}
         <Route exact path="/resumeForms/1" element={<FormAndResume readyForSubmission={readyForSubmission} setReadyForSubmission={setReadyForSubmission} currentForm={currentForm} setCurrentForm={setCurrentForm} newFormVal={1} completeData={completeData} setCompleteData={setCompleteData} />} />

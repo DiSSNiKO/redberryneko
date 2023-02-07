@@ -3,13 +3,19 @@ import { Link } from "react-router-dom"
 
 function GreetingPage(props) {
 
-    useEffect(()=>{
-        if(props.currentForm!==0){
+    useEffect(() => {
+        //useEffect for setting the current form
+        if (props.currentForm !== 0) {
             props.setCurrentForm(0)
+            sessionStorage.clear();
+            props.setCompleteData({
+                firstFormData: {},
+                secondFormData: {},
+                lastFormData: {}
+            });
         }
-        //useeffect for setting the current form
     });
-    if(props.currentForm===0){
+    if (props.currentForm === 0) {
         return (
             <div className="greeting-main">
                 <div className="greeting-header">

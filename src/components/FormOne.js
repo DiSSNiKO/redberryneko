@@ -11,43 +11,47 @@ import {
 } from '../utilities'
 function FormOne(props) {
     const [justMounted, setJustMounted] = useState(true);
+    //_VARNAME for data that needs validation
     const [formContent, setFormContent] = useState({
-        name: null,
-        lastName: null,
-        phoneNumber: null,
-        email: null,
+        _name: null,
+        _lastName: null,
+        _phoneNumber: null,
+        _email: null,
         selfDesc: null,
-        photo: null
+        _photo: null
     });
+    const evalFunctionPairing = {
+        _name: nameLastnameValidated,
+        _lastName: nameLastnameValidated,
+        _email: emailEval,
+        _phoneNumber: numberEval,
+        selfDesc: selfDescEval,
+        // _photo: photoEval
+    }
     const { currentForm, setCurrentForm, completeData, readyForSubmission, setReadyForSubmission } = props;
     useEffect(() => {
         if (currentForm !== 1) {
             setCurrentForm(1);
         }
+        const sessionStorageObj = {
+            ...completeData,
+            firstFormData: formContent
+        }
+        sessionStorage.setItem("completeData", JSON.stringify(sessionStorageObj));
     });
     useEffect(() => {
         if (justMounted) {
             setJustMounted(false);
         } else {
             props.setCompleteData({
-                ...props.completeData,
+                ...completeData,
                 firstFormData: formContent
             })
         }
-        finalEval(readyForSubmission, setReadyForSubmission, "privateInfoValidated");
+        finalEval(readyForSubmission, setReadyForSubmission, "privateInfoValidated", evalFunctionPairing, formContent);
     }, [formContent]);
     useEffect(() => {
-        const evalFunctionPairingWithSymbols = {
-            name: nameLastnameValidated,
-            lastName: nameLastnameValidated,
-            email: emailEval,
-            phoneNumber: numberEval
-        }
-        const evalFunctionWithoutSymbols = {
-            selfDesc: selfDescEval,
-            photo: photoEval
-        }
-        ifExistantGetDataFromMainStateAndCheckValidity(evalFunctionPairingWithSymbols, evalFunctionWithoutSymbols, formContent, setFormContent, readyForSubmission, setReadyForSubmission, "privateInfoValidated", completeData);
+        ifExistantGetDataFromMainStateAndCheckValidity(evalFunctionPairing, formContent, setFormContent, readyForSubmission, setReadyForSubmission, "privateInfoValidated", completeData);
     }, []);
     if (currentForm === 1) {
         return (
@@ -57,9 +61,9 @@ function FormOne(props) {
                         <div className="input-cont">
                             <span className="input-title">სახელი</span>
                             <div style={{ position: "relative" }}>
-                                <input className="input-small needsEval formInput" data-input-for="name" type={"text"} onChange={(e) => {
+                                <input className="input-small needsEval formInput" data-input-for="_name" type={"text"} onChange={(e) => {
                                     e.target.value = removeWhiteSpace(e.target.value);
-                                    formStateUpdater(e.target, "name", nameLastnameValidated, formContent, setFormContent);
+                                    formStateUpdater(e.target, "_name", nameLastnameValidated, formContent, setFormContent);
                                 }} />
                                 <img className="inputValidationSymbols validated" src="/images/validated.svg" />
                                 <img className="inputValidationSymbols notValidated" src="/images/notValidated.svg" />
@@ -69,9 +73,9 @@ function FormOne(props) {
                         <div className="input-cont">
                             <span className="input-title">გვარი</span>
                             <div style={{ position: "relative" }}>
-                                <input className="input-small needsEval formInput" data-input-for="lastName" type={"text"} onChange={(e) => {
+                                <input className="input-small needsEval formInput" data-input-for="_lastName" type={"text"} onChange={(e) => {
                                     e.target.value = removeWhiteSpace(e.target.value);
-                                    formStateUpdater(e.target, "lastName", nameLastnameValidated, formContent, setFormContent);
+                                    formStateUpdater(e.target, "_lastName", nameLastnameValidated, formContent, setFormContent);
                                 }} />
                                 <img className="inputValidationSymbols validated" src="/images/validated.svg" />
                                 <img className="inputValidationSymbols notValidated" src="/images/notValidated.svg" />
@@ -99,9 +103,9 @@ function FormOne(props) {
                     <div className="email-cont input-cont">
                         <div className="input-title">ელ.ფოსტა</div>
                         <div style={{ position: "relative" }}>
-                            <input className="input-small needsEval formInput" data-input-for="email" type={"text"} onChange={(e) => {
+                            <input className="input-small needsEval formInput" data-input-for="_email" type={"text"} onChange={(e) => {
                                 noBannedInputs(e.target, allowedEmailChars);
-                                formStateUpdater(e.target, "email", emailEval, formContent, setFormContent);
+                                formStateUpdater(e.target, "_email", emailEval, formContent, setFormContent);
                             }} />
                             <img className="inputValidationSymbols validated" src="/images/validated.svg" />
                             <img className="inputValidationSymbols notValidated" src="/images/notValidated.svg" />
@@ -111,8 +115,8 @@ function FormOne(props) {
                     <div className="phone-number-cont input-cont">
                         <span className="input-title">მობილურის ნომერი</span>
                         <div style={{ position: "relative" }}>
-                            <input className="input-small needsEval formInput" data-input-for="phoneNumber" placeholder="+995 000 00 00 00" type={"text"} onChange={(e) => {
-                                formStateUpdater(e.target, "phoneNumber", numberEval, formContent, setFormContent);
+                            <input className="input-small needsEval formInput" data-input-for="_phoneNumber" placeholder="+995 000 00 00 00" type={"text"} onChange={(e) => {
+                                formStateUpdater(e.target, "_phoneNumber", numberEval, formContent, setFormContent);
                                 if (e.target.value.length >= 17) {
                                     e.target.value = removeTrailingWhiteSpace(e.target.value);
                                 }
@@ -124,7 +128,7 @@ function FormOne(props) {
                     </div>
                 </div>
                 <Link to="/resumeForms/2" className="next-form-button no-annoying-style" onClick={(e) => {
-                    if (!finalEval(readyForSubmission, setReadyForSubmission, "privateInfoValidated")) {
+                    if (!finalEval(readyForSubmission, setReadyForSubmission, "privateInfoValidated", evalFunctionPairing, formContent)) {
                         e.preventDefault()
                     }
                 }}>შემდეგი</Link>

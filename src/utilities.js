@@ -10,6 +10,9 @@ const georgianAlphabet = "აბგდევზთიკლმნოპჟრს
 
 //VALIDATION FUNCTIONS
 function nameLastnameValidated(text) {
+    if (!text) {
+        return false;
+    }
     let forbiddenChar = false;
     for (const char of text) {
         if (!georgianAlphabet.includes(char)) {
@@ -58,6 +61,9 @@ function photoEval() {
     return 0;
 }
 function numberEval(phoneNum) {
+    if (!phoneNum) {
+        return false;
+    }
     phoneNum = phoneNum.toString();
     const numbas = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
     if (phoneNum.length < 17) {
@@ -104,6 +110,9 @@ function noBannedInputs(eTarget, allowedChars) {
     }
 }
 function emailEval(email) {
+    if (!email) {
+        return false;
+    }
     const validEmail = "redberry.ge"
     let atCount = 0;
     let afterAt = "";
@@ -162,16 +171,19 @@ function formStateUpdater(eTarget, formPart, validationFunction, formContent, se
         setFormContent(newObject);
     }
 }
-function finalEval(readyForSubmission, setReadyForSubmission, formNameValidated) {
+function finalEval(readyForSubmission, setReadyForSubmission, formNameValidated, evalFunctionPairing, formData) {
     let successes = 0;
     const currentForm = readyForSubmission;
-    const evalStatusElems = document.querySelectorAll('.needsEval');
-    evalStatusElems.forEach((elem) => {
-        if (elem.classList.contains('validation-success')) {
-            successes++;
+    let totalInNeedOfEval = 0;
+    Object.keys(evalFunctionPairing).forEach((key) => {
+        if (key[0] === "_") {
+            totalInNeedOfEval++;
+            if (evalFunctionPairing[key](formData[key])) {
+                successes++;
+            }
         }
     });
-    if (successes === evalStatusElems.length) {
+    if (successes === totalInNeedOfEval) {
         currentForm[formNameValidated] = true;
         setReadyForSubmission({ ...currentForm });
         return true;
@@ -181,7 +193,7 @@ function finalEval(readyForSubmission, setReadyForSubmission, formNameValidated)
         return false;
     }
 }
-function ifExistantGetDataFromMainStateAndCheckValidity(evalFunctionPairingWithSymbols, evalFunctionWithoutSymbols, formContent, setFormContent, readyForSubmission, setReadyForSubmission, formNameValidated, completeData) {
+function ifExistantGetDataFromMainStateAndCheckValidity(evalFunctionPairing, formContent, setFormContent, readyForSubmission, setReadyForSubmission, formNameValidated, completeData) {
     const newObj = formContent;
     Object.entries(completeData.firstFormData).forEach((keyVal) => {
         if (keyVal[1] !== null) {
@@ -190,19 +202,19 @@ function ifExistantGetDataFromMainStateAndCheckValidity(evalFunctionPairingWithS
     });
     const inputs = document.querySelectorAll('.formInput');
     const objkeys = Object.keys(newObj);
-    objkeys.forEach((key, index) => {
+    objkeys.forEach((key) => {
         inputs.forEach((inpt) => {
             if (inpt.dataset.inputFor === key) {
                 inpt.value = newObj[key];
-                if (Object.keys(evalFunctionPairingWithSymbols).includes(key)) {
-                    validationStyling(inpt, evalFunctionPairingWithSymbols[key]);
+                if (key[0] === "_") {
+                    validationStyling(inpt, evalFunctionPairing[key]);
                 } else {
-                    evalFunctionWithoutSymbols[key](inpt);
+                    evalFunctionPairing[key](inpt);
                 }
             }
         });
     });
-    finalEval(readyForSubmission, setReadyForSubmission, formNameValidated);
+    finalEval(readyForSubmission, setReadyForSubmission, formNameValidated, evalFunctionPairing, formContent);
     setFormContent(newObj);
 }
 

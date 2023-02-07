@@ -2,41 +2,51 @@
   font-family: 'HelveticaNeue';
   src: url('../src/HelveticaNeue.ttc');
 }
+
 * {
   box-sizing: border-box;
   font-family: 'HelveticaNeue';
 }
+
 :root {
   --generictextsize: 1.5rem;
-  --validationSuccess: rgba(152,227,126,255);
-  --validationFail: rgba(239,80,80,255);
+  --validationSuccess: rgba(152, 227, 126, 255);
+  --validationFail: rgba(239, 80, 80, 255);
 }
+
 * {
   box-sizing: border-box;
 }
+
 .validation-fail {
   border: 1px solid var(--validationFail) !important;
 }
+
 .validation-success {
   border: 1px solid var(--validationSuccess) !important;
 }
+
 html {
   font-size: 62.5%;
   min-height: 100vh;
   min-width: 100vw;
 }
+
 .no-annoying-style {
   border: none;
   outline: none;
   text-decoration: none;
 }
+
 .get-opacity-for-symbols {
   opacity: 1 !important;
   z-index: 1 !important;
 }
+
 .no-display {
   display: none !important;
 }
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -46,7 +56,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
   min-width: 100%;
 }
-body, .root, .App {
+
+body,
+.root,
+.App {
   min-height: 100vh;
 }
 
@@ -65,6 +78,7 @@ code {
   width: 100%;
   height: 100vh;
 }
+
 .greeting-header {
   height: 7.5rem;
   border-bottom: 1px solid rgba(0, 0, 0, 0.75);
@@ -72,7 +86,8 @@ code {
   margin: 0 auto;
   padding: 1rem 0;
   display: flex;
-  justify-content: flex-start; /* default */
+  justify-content: flex-start;
+  /* default */
   align-items: center;
 }
 
@@ -90,6 +105,7 @@ code {
   color: white;
   text-align: center;
 }
+
 /* FORM AND RESUME DISPLAY */
 
 .form-resume-cont {
@@ -97,15 +113,17 @@ code {
   grid-template-columns: repeat(12, 1fr);
   grid-template-areas: "f f f f f f f r r r r r";
 }
+
 .progression-header {
   position: relative;
-  background-color: rgba(249,249,249,255);
+  background-color: rgba(249, 249, 249, 255);
   height: 70px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.9);
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
 }
+
 .go-back-button-header {
   display: flex;
   flex-direction: column;
@@ -125,22 +143,28 @@ code {
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0);
   cursor: pointer;
 }
+
 .go-back-button-header:hover {
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.15);
   transform: translateY(-75%) scale(1.05);
 }
-.progression-header h1, span {
+
+.progression-header h1,
+span {
   margin-bottom: 1.5rem;
 }
+
 .progression-header span {
   font-size: 2rem;
 }
+
 .progression-header h1 {
   font-weight: 700;
   font-size: 2.2rem;
 }
+
 .current-form-cont {
-  background-color: rgba(249,249,249,255);
+  background-color: rgba(249, 249, 249, 255);
   padding: 0 7.5rem 0 7.5rem;
   min-height: 100vh;
   grid-area: f;
@@ -156,29 +180,36 @@ code {
   user-select: none;
   z-index: -1;
 }
+
 .notValidated {
   right: -30px;
 }
+
 .validated {
   right: 15px;
 }
-.input-cont input, textarea {
+
+.input-cont input,
+textarea {
   display: block;
   /* height: 4rem; */
   border-radius: 4px;
-  border: 1px solid rgb(188,188,188);
+  border: 1px solid rgb(188, 188, 188);
   width: 100%;
   font-size: 1.6rem;
   transition: all 0.2s;
   outline: none;
   font-weight: 500;
 }
-.input-cont input:focus, textarea:focus {
+
+.input-cont input:focus,
+textarea:focus {
   background-color: rgba(173, 216, 230, 0.25);
 
 }
+
 .next-form-button {
-  background-color: rgb(112,68,228);
+  background-color: rgb(112, 68, 228);
   width: 15rem;
   padding: 2rem;
   font-size: 1.8rem;
@@ -189,15 +220,18 @@ code {
   text-align: center;
   text-decoration: none;
 }
+
 .current-form {
   margin-top: 3rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
+
 .input-small {
   height: 4rem;
 }
+
 .input-big {
   height: 8rem;
   word-break: break-word;
@@ -206,12 +240,14 @@ code {
 .input-cont {
   margin: 3.5rem 0;
 }
+
 .input-title {
   display: block;
   font-size: var(--generictextsize);
   font-weight: 700;
   margin-bottom: 1rem;
 }
+
 .validation-alert {
   font-size: 1.3rem;
   display: block;
@@ -226,12 +262,15 @@ code {
   grid-template-columns: repeat(2, 1fr);
   column-gap: 7.5rem;
 }
+
 #upload-pic-input {
   display: none;
 }
+
 .upload-pic-cont {
   display: flex;
 }
+
 .upload-pic-cont label {
   font-size: calc(var(--generictextsize) - 1px);
   background-color: rgb(53, 134, 255);
@@ -241,13 +280,16 @@ code {
   margin-left: 2rem;
   cursor: pointer;
 }
+
 .about-me-cont {
   display: flex;
   flex-direction: column;
 }
+
 .about-me-cont textarea {
   resize: none;
 }
+
 /* resume style */
 .dynamic-resume-display {
   grid-area: r;
@@ -260,45 +302,56 @@ code {
   align-items: flex-start;
   column-gap: 2rem;
 }
-.image-info-cont > img {
+
+.image-info-cont>img {
   height: 25rem;
   min-width: 25rem;
   object-fit: cover;
   border-radius: 50%;
 }
+
 .resume-name-and-lastname h1 {
   color: rgb(249, 59, 29);
   font-size: 3rem;
 }
+
 .resume-name-and-lastname h1:first-child {
   margin-right: 1.5rem;
 }
+
 .resume-name-and-lastname {
   display: flex;
   margin-bottom: 2.5rem;
 }
+
 .phone-email-cont {
   margin-bottom: 2.5rem;
 }
+
 .phone-email-cont * {
   margin-bottom: 1.5rem;
 }
+
 .phone-email {
   display: flex;
 }
+
 .phone-email img {
   width: 2rem;
   height: 2rem;
 }
+
 .phone-email span {
   display: block;
   font-size: 1.8rem;
   font-weight: 400;
   margin: 0;
 }
+
 .phone-email img:first-child {
   margin-right: 1rem;
 }
+
 .about-me {
   font-size: 1.5rem;
   margin-top: 1.5rem;
