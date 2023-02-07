@@ -58,6 +58,7 @@ function selfDescEval(eTarget) {
     }
 }
 function photoEval() {
+    console.log("EVAL")
     return 0;
 }
 function numberEval(phoneNum) {
@@ -138,6 +139,10 @@ function validationStyling(eTarget, validationFunction) {
     //Also returns a boolean to check whether the validation was successful or not.
     const newValue = eTarget.value;
     const symbols = eTarget.closest('div').querySelectorAll(".inputValidationSymbols");
+    if (symbols === null) {
+        validationFunction(newValue);
+        return 0;
+    }
     if (newValue === '') {
         symbols[0].classList.remove('get-opacity-for-symbols');
         symbols[1].classList.remove('get-opacity-for-symbols');

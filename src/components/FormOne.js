@@ -26,7 +26,7 @@ function FormOne(props) {
         _email: emailEval,
         _phoneNumber: numberEval,
         selfDesc: selfDescEval,
-        // _photo: photoEval
+        _photo: photoEval
     }
     const { currentForm, setCurrentForm, completeData, readyForSubmission, setReadyForSubmission } = props;
     useEffect(() => {
