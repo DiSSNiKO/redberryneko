@@ -1,4 +1,4 @@
-
+import { photoEval } from "../utilities";
 
 function DynamicResumeDisplay(props) {
     const { completeData } = props;
@@ -27,14 +27,38 @@ function DynamicResumeDisplay(props) {
                             <div className="about-me">{firstFormData.selfDesc}</div>
                         </div>
                     </div>
-                    <img src="https://scontent.ftbs5-2.fna.fbcdn.net/v/t1.6435-9/164505026_280516806779798_4525003623650170447_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=jY9PYtwUPB8AX8RSp_B&_nc_ht=scontent.ftbs5-2.fna&oh=00_AfDjnfNC5QymJs0d6hk9ZMOyMYGSZx8wDhhbYTjTALajpw&oe=64073187" />
+                    <img id={"profile-pic"} src={photoEval(firstFormData._photo) ? firstFormData._photo : ""} />
                 </div>
             </div>
             <div className="work-experience-cont">
-
+                <h1 className="experience-title">გამოცდილება</h1>
+                {completeData['secondFormData'].map((expObj, kei) => {
+                    return (
+                        <div key={kei} className="work-experience">
+                            <div style={{ display: 'flex' }}>
+                                <h1 className="posemp-title" style={{ marginRight: "1rem" }}>{expObj['_position']}{expObj['_position'] ? "," : ""}</h1>
+                                <h1 className="posemp-title">{expObj['_employer']}</h1>
+                            </div>
+                            <h1 className="work-dates-title">{expObj['_startDate']}{expObj['_startDate'] ? " - " : ""}{expObj['_endDate']}</h1>
+                            <h2 className="jobdesc-title">{expObj['_jobDescription']}</h2>
+                        </div>
+                    );
+                })}
             </div>
-            <div className="education-info-cont">
-
+            <div className="education-cont">
+                <h1 className="experience-title">განათლება</h1>
+                {completeData['lastFormData'].map((expObj, kei) => {
+                    return (
+                        <div key={kei} className="work-experience">
+                            <div style={{ display: 'flex' }}>
+                                <h1 className="posemp-title" style={{ marginRight: "1rem" }}>{expObj['_educationInstitution']}{expObj['_educationInstitution'] ? "," : ""}</h1>
+                                <h1 className="posemp-title">{expObj['_educationLevel']}</h1>
+                            </div>
+                            <h1 className="work-dates-title">{expObj['_endDate']}</h1>
+                            <h2 className="jobdesc-title">{expObj['_educationDescription']}</h2>
+                        </div>
+                    );
+                })}
             </div>
         </div>
     );

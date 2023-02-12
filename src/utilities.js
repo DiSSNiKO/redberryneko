@@ -56,10 +56,14 @@ function selfDescEval(eTarget) {
     } else {
         eTarget.classList.remove('validation-success');
     }
+    return true;
 }
-function photoEval() {
-    console.log("EVAL")
-    return 0;
+async function photoEval(file) {
+    const imgElem = document.querySelector("#profile-pic");
+    if (!file || !imgElem) {
+        return false;
+    }
+    return true;
 }
 function numberEval(phoneNum) {
     if (!phoneNum) {
@@ -135,40 +139,59 @@ function emailEval(email) {
         return false;
     }
 }
-function validationStyling(eTarget, validationFunction) {
+function validationStyling(eTarget, validationFunctionResult) {
     //Also returns a boolean to check whether the validation was successful or not.
     const newValue = eTarget.value;
+    let additionalSymbols = true;
     const symbols = eTarget.closest('div').querySelectorAll(".inputValidationSymbols");
-    if (symbols === null) {
-        validationFunction(newValue);
-        return 0;
+    if (symbols.length === 0) {
+        additionalSymbols = false
     }
-    if (newValue === '') {
-        symbols[0].classList.remove('get-opacity-for-symbols');
-        symbols[1].classList.remove('get-opacity-for-symbols');
-        eTarget.classList.remove('validation-success');
-        eTarget.classList.remove('validation-fail');
-        return false;
-    }
-    if (!validationFunction(newValue)) {
-        eTarget.classList.add('validation-fail');
-        symbols[1].classList.add('get-opacity-for-symbols');
-        symbols[0].classList.remove('get-opacity-for-symbols');
-        eTarget.classList.remove('validation-success');
-        return false;
+    if (additionalSymbols) {
+        if (newValue === '') {
+            symbols[0].classList.remove('get-opacity-for-symbols');
+            symbols[1].classList.remove('get-opacity-for-symbols');
+            eTarget.classList.remove('validation-success');
+            eTarget.classList.remove('validation-fail');
+            return false;
+        }
+        if (!validationFunctionResult) {
+            eTarget.classList.add('validation-fail');
+            symbols[1].classList.add('get-opacity-for-symbols');
+            symbols[0].classList.remove('get-opacity-for-symbols');
+            eTarget.classList.remove('validation-success');
+            return false;
+        } else {
+            eTarget.classList.add('validation-success');
+            symbols[0].classList.add('get-opacity-for-symbols');
+            symbols[1].classList.remove('get-opacity-for-symbols');
+            eTarget.classList.remove('validation-fail');
+            return true;
+        }
     } else {
-        eTarget.classList.add('validation-success');
-        symbols[0].classList.add('get-opacity-for-symbols');
-        symbols[1].classList.remove('get-opacity-for-symbols');
-        eTarget.classList.remove('validation-fail');
-        return true;
+        if (newValue === '') {
+            eTarget.classList.remove('validation-success');
+            eTarget.classList.remove('validation-fail');
+            return false;
+        }
+        if (!validationFunctionResult) {
+            eTarget.classList.add('validation-fail');
+            eTarget.classList.remove('validation-success');
+            return false;
+        } else {
+            eTarget.classList.add('validation-success');
+            eTarget.classList.remove('validation-fail');
+            return true;
+        }
     }
 }
-function formStateUpdater(eTarget, formPart, validationFunction, formContent, setFormContent) {
+
+function formStateUpdater(eTarget, formPart, validationFunctionResult, formContent, setFormContent) {
     const newObject = {
         ...formContent
     }
-    if (validationStyling(eTarget, validationFunction)) {
+    validationStyling(eTarget, validationFunctionResult)
+    if (validationFunctionResult) {
         newObject[formPart] = eTarget.value;
         setFormContent(newObject);
     } else {
@@ -176,28 +199,95 @@ function formStateUpdater(eTarget, formPart, validationFunction, formContent, se
         setFormContent(newObject);
     }
 }
-function finalEval(readyForSubmission, setReadyForSubmission, formNameValidated, evalFunctionPairing, formData) {
-    let successes = 0;
+function formStateUpdaterDynamicHTML(eTarget, formPart, validationFunctionResult, formContent, setFormContent, changeIndex) {
+    const arai = [...formContent];
+    const newObject = {
+        ...formContent[changeIndex]
+    }
+    validationStyling(eTarget, validationFunctionResult);
+    if (validationFunctionResult) {
+        newObject[formPart] = eTarget.value;
+        arai[changeIndex] = newObject;
+        setFormContent(arai);
+    } else {
+        newObject[formPart] = null;
+        arai[changeIndex] = newObject;
+        setFormContent(arai);
+    }
+}
+function formStateUpdaterDynamicHTMLForButtons(eTarget, formPart, validationFunctionResult, formContent, setFormContent, changeIndex) {
+    const arai = [...formContent];
+    const newObject = {
+        ...formContent[changeIndex]
+    }
+    validationStyling(eTarget, validationFunctionResult);
+    if (validationFunctionResult) {
+        newObject[formPart] = eTarget.textContent;
+        arai[changeIndex] = newObject;
+        setFormContent(arai);
+    } else {
+        newObject[formPart] = null;
+        arai[changeIndex] = newObject;
+        setFormContent(arai);
+    }
+}
+const finalEval = (readyForSubmission, setReadyForSubmission, formNameValidated, evalFunctionPairing, formData) => {
     const currentForm = readyForSubmission;
     let totalInNeedOfEval = 0;
-    Object.keys(evalFunctionPairing).forEach((key) => {
+    if (!Array.isArray(formData)) { //this way it SHOULD work for all 3.
+        formData = [formData];
+    }
+    Object.keys(formData[0]).forEach((key) => {
         if (key[0] === "_") {
             totalInNeedOfEval++;
-            if (evalFunctionPairing[key](formData[key])) {
-                successes++;
-            }
         }
     });
-    if (successes === totalInNeedOfEval) {
-        currentForm[formNameValidated] = true;
-        setReadyForSubmission({ ...currentForm });
+    let successesArray = [];
+    Array.from(formData).forEach((dataObj) => {
+        let successes = 0;
+        Object.keys(evalFunctionPairing).forEach((key) => {
+            if (Object.keys(dataObj).includes(key) && key[0] === "_") {
+                if (key === "_startDate") {
+                    if (evalFunctionPairing[key](dataObj)) {
+                        successes++;
+                    }
+                } else {
+                    if (key[0] === "_") {
+                        if (key !== "_photo") {
+                            if (evalFunctionPairing[key](dataObj[key])) {
+                                successes++;
+                            }
+                        } else {
+                            if (dataObj[key] !== null && dataObj[key] !== '') {
+                                successes++;
+                            }
+                        }
+                    } else {
+                        if (dataObj[key]) {
+                            successes++;
+                        }
+                    }
+                }
+
+            }
+        });
+        successesArray.push(successes);
+    });
+    if (successesArray.every((val) => { return val === totalInNeedOfEval })) {
+        if (!currentForm[formNameValidated]) {
+            currentForm[formNameValidated] = true;
+            setReadyForSubmission({ ...currentForm });
+        }
         return true;
     } else {
-        currentForm[formNameValidated] = false;
-        setReadyForSubmission({ ...currentForm });
+        if (currentForm[formNameValidated]) {
+            currentForm[formNameValidated] = false;
+            setReadyForSubmission({ ...currentForm });
+        }
         return false;
     }
 }
+
 function ifExistantGetDataFromMainStateAndCheckValidity(evalFunctionPairing, formContent, setFormContent, readyForSubmission, setReadyForSubmission, formNameValidated, completeData) {
     const newObj = formContent;
     Object.entries(completeData.firstFormData).forEach((keyVal) => {
@@ -210,9 +300,15 @@ function ifExistantGetDataFromMainStateAndCheckValidity(evalFunctionPairing, for
     objkeys.forEach((key) => {
         inputs.forEach((inpt) => {
             if (inpt.dataset.inputFor === key) {
-                inpt.value = newObj[key];
+                if (key !== "_photo") {
+                    inpt.value = newObj[key];
+                }
                 if (key[0] === "_") {
-                    validationStyling(inpt, evalFunctionPairing[key]);
+                    if (key !== "_photo") {
+                        validationStyling(inpt, evalFunctionPairing[key](inpt.value));
+                    } else {
+                        evalFunctionPairing[`${key}`](newObj[`${key}`]);
+                    }
                 } else {
                     evalFunctionPairing[key](inpt);
                 }
@@ -223,5 +319,83 @@ function ifExistantGetDataFromMainStateAndCheckValidity(evalFunctionPairing, for
     setFormContent(newObj);
 }
 
+//form 2
 
-export { georgianAlphabet, ifExistantGetDataFromMainStateAndCheckValidity, allowedEmailChars, noBannedInputs, emailEval, photoEval, numberEval, nameLastnameValidated, selfDescEval, removeWhiteSpace, removeTrailingWhiteSpace, finalEval, validationStyling, formStateUpdater };
+const moreThanTwo = (str) => {
+    if (!str) {
+        return false;
+    }
+    if (str.length < 2) {
+        return false;
+    } else {
+        return true;
+    }
+}
+function checkDateStart(_startDate, endDate) {
+    if (!_startDate) {
+        return false;
+    }
+
+    if (!endDate) {
+        return true;
+    }
+    const startdatesplit = _startDate.split('-');
+    const enddatesplit = endDate.split('-');
+
+    if (Number(startdatesplit[0]) > Number(enddatesplit[0])) {
+
+        return false;
+    } else if (Number(startdatesplit[0]) === Number(enddatesplit[0])) {
+        if (Number(startdatesplit[1]) > Number(enddatesplit[1])) {
+
+            return false;
+        } else if (Number(startdatesplit[1]) === Number(enddatesplit[1])) {
+            if (Number(startdatesplit[2]) > Number(enddatesplit[2])) {
+
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+function existantValue(val) {
+    if (val) {
+        return true;
+    } else {
+        return false;
+    }
+}
+// function existantValueAndStyle(eTarget) {
+//     const valu = existantValue(eTarget.value);
+//     if (existantValue(eTarget.value)) {
+//         eTarget.classList.add('validation-success');
+//     } else {
+//         eTarget.classList.remove('validation-success');
+//     }
+//     return valu;
+// }
+function getDataFromMain(evalFunctionPairing, formContent, setFormContent, readyForSubmission, setReadyForSubmission, formNameValidated, completeData, chosenForm) {
+    const newArr = completeData[chosenForm];
+    if (newArr.length === 0) {
+        return 0;
+    }
+    finalEval(readyForSubmission, setReadyForSubmission, formNameValidated, evalFunctionPairing, formContent);
+    setFormContent(newArr);
+}
+export {
+    //form 1
+    allowedEmailChars, noBannedInputs, emailEval, photoEval,
+    numberEval, nameLastnameValidated, selfDescEval,
+    //form 2
+    checkDateStart,
+
+    //form 3
+    formStateUpdaterDynamicHTMLForButtons,
+
+    //general
+    removeWhiteSpace, removeTrailingWhiteSpace, finalEval, validationStyling, formStateUpdater,
+    georgianAlphabet, ifExistantGetDataFromMainStateAndCheckValidity, moreThanTwo, formStateUpdaterDynamicHTML,
+    getDataFromMain, existantValue,
+
+};

@@ -28,7 +28,6 @@ function FormAndResume(props) {
             <div className="form-resume-cont">
                 <div className="current-form-cont">
                     <div className="progression-header">
-                        <Link to="/" className="go-back-button-header no-annoying-style"><img src="/images/lesserthan.svg" /></Link>
                         <h1>{headerText[currentForm]}</h1>
                         <span>{currentForm}/3</span>
                     </div>

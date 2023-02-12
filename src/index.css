@@ -60,7 +60,9 @@ body {
 body,
 .root,
 .App {
+  position: relative;
   min-height: 100vh;
+  padding: 3rem 0;
 }
 
 code {
@@ -134,9 +136,8 @@ code {
   border: solid 1px rgba(0, 0, 0, 0.5);
   position: absolute;
   margin: 0;
-  top: 75%;
-  transform: translateY(-75%);
-  left: -50px;
+  top: 3rem;
+  left: 2rem;
   width: 3rem;
   height: 3rem;
   transition: all 0.2s;
@@ -146,7 +147,7 @@ code {
 
 .go-back-button-header:hover {
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.15);
-  transform: translateY(-75%) scale(1.05);
+  transform: scale(1.05);
 }
 
 .progression-header h1,
@@ -191,6 +192,18 @@ span {
 
 .input-cont input,
 textarea {
+  display: block;
+  /* height: 4rem; */
+  border-radius: 4px;
+  border: 1px solid rgb(188, 188, 188);
+  width: 100%;
+  font-size: 1.6rem;
+  transition: all 0.2s;
+  outline: none;
+  font-weight: 500;
+}
+
+.input-cont button {
   display: block;
   /* height: 4rem; */
   border-radius: 4px;
@@ -257,7 +270,7 @@ textarea:focus {
 }
 
 /*form 1*/
-.name-lastname {
+.horizontal-two-inputs {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   column-gap: 7.5rem;
@@ -281,19 +294,67 @@ textarea:focus {
   cursor: pointer;
 }
 
-.about-me-cont {
+.textarea-cont {
   display: flex;
   flex-direction: column;
 }
 
-.about-me-cont textarea {
+.textarea-cont textarea {
   resize: none;
+}
+
+/* form 2 */
+
+.new-experience {
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.75);
+}
+
+.experiences-cont {
+  margin-bottom: 2rem;
+  max-height: 62rem;
+  overflow-y: scroll;
+  padding: 0 0.5rem;
+}
+
+.experiences-cont::-webkit-scrollbar {
+  display: none;
+}
+
+.add-new-experience {
+  padding: 1rem 0;
+  background-color: rgba(98, 161, 235, 1);
+  color: white;
+  font-size: 1.6rem;
+  width: 30rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.add-new-experience:hover {
+  color: aqua;
+  background-color: rgb(19, 129, 255);
+}
+
+.backwars-forwards-cont {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 2.5rem;
 }
 
 /* resume style */
 .dynamic-resume-display {
   grid-area: r;
   padding: 3rem 5rem;
+  max-height: 90rem;
+  overflow-y: scroll;
+}
+
+.dynamic-resume-display::-webkit-scrollbar {
+  display: none;
 }
 
 .image-info-cont {
@@ -301,6 +362,17 @@ textarea:focus {
   justify-content: space-between;
   align-items: flex-start;
   column-gap: 2rem;
+}
+
+.private-info-cont {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  padding-bottom: 1rem;
+}
+
+.work-experience-cont {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
 }
 
 .image-info-cont>img {
@@ -356,4 +428,84 @@ textarea:focus {
   font-size: 1.5rem;
   margin-top: 1.5rem;
   font-weight: 500;
+}
+
+.work-experience h1 {
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.posemp-title {
+  font-weight: 700 !important;
+  font-size: 1.8rem;
+}
+
+.work-experience {
+  margin-bottom: 5rem;
+}
+
+.experience-title {
+  color: rgb(249, 59, 29);
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+}
+
+.work-dates-title {
+  font-style: italic;
+  color: grey;
+}
+
+.jobdesc-title {
+  font-weight: 500;
+}
+
+/* form 3 */
+
+.education-level-select-cont {
+  position: relative;
+}
+
+.education-level-select-cont>button {
+  background-color: white;
+}
+
+.education-levels {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 4px;
+  background-color: white;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+}
+
+.education-levels button {
+  border-radius: 0;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 1.4rem;
+  padding: 0.5rem 0;
+}
+
+.education-levels button:hover {
+  background-color: rgb(220, 220, 220);
+}
+
+.education-cont {
+  padding: 1rem 0;
+}
+
+/* final cv */
+
+.final-cv-cont {
+  width: 100%;
+  display: flex;
+}
+
+.final-cv-cont .dynamic-resume-display {
+  width: 50%;
+  margin: auto;
+  padding: 3rem 5rem;
+  border: 1px solid rgba(0, 0, 0, 0.5);
 }

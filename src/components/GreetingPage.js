@@ -10,8 +10,8 @@ function GreetingPage(props) {
             sessionStorage.clear();
             props.setCompleteData({
                 firstFormData: {},
-                secondFormData: {},
-                lastFormData: {}
+                secondFormData: [],
+                lastFormData: []
             });
         }
     });

@@ -57,13 +57,13 @@ function FormOne(props) {
         return (
             <form className="current-form">
                 <div>
-                    <div className="name-lastname">
+                    <div className="horizontal-two-inputs">
                         <div className="input-cont">
                             <span className="input-title">სახელი</span>
                             <div style={{ position: "relative" }}>
                                 <input className="input-small needsEval formInput" data-input-for="_name" type={"text"} onChange={(e) => {
                                     e.target.value = removeWhiteSpace(e.target.value);
-                                    formStateUpdater(e.target, "_name", nameLastnameValidated, formContent, setFormContent);
+                                    formStateUpdater(e.target, "_name", nameLastnameValidated(e.target.value), formContent, setFormContent);
                                 }} />
                                 <img className="inputValidationSymbols validated" src="/images/validated.svg" />
                                 <img className="inputValidationSymbols notValidated" src="/images/notValidated.svg" />
@@ -75,7 +75,7 @@ function FormOne(props) {
                             <div style={{ position: "relative" }}>
                                 <input className="input-small needsEval formInput" data-input-for="_lastName" type={"text"} onChange={(e) => {
                                     e.target.value = removeWhiteSpace(e.target.value);
-                                    formStateUpdater(e.target, "_lastName", nameLastnameValidated, formContent, setFormContent);
+                                    formStateUpdater(e.target, "_lastName", nameLastnameValidated(e.target.value), formContent, setFormContent);
                                 }} />
                                 <img className="inputValidationSymbols validated" src="/images/validated.svg" />
                                 <img className="inputValidationSymbols notValidated" src="/images/notValidated.svg" />
@@ -86,11 +86,23 @@ function FormOne(props) {
                     <div className="upload-pic-cont">
                         <span className="input-title">პირადი ფოტოს ატვირთვა</span>
                         <label htmlFor="upload-pic-input">ატვირთვა</label>
-                        <input type={"file"} id="upload-pic-input" data-input-for="photo" className="formInput" />
+                        <input type={"file"} accept="image/*" id="upload-pic-input" data-input-for="_photo" className="formInput" onChange={(e) => {
+                            if (photoEval(e.target.files[0])) {
+                                const obj = { ...formContent };
+                                const photoString = "_photo";
+                                const fr = new FileReader();
+                                fr.readAsDataURL(e.target.files[0]);
+                                fr.addEventListener('load', () => {
+                                    const image = fr.result;
+                                    obj[photoString] = image;
+                                    setFormContent(obj)
+                                });
+                            }
+                        }} />
                     </div>
                 </div>
                 <div>
-                    <div className="input-cont about-me-cont">
+                    <div className="input-cont textarea-cont">
                         <span className="input-title">ჩემ შესახებ &#40;არასავალდებულო&#41;</span>
                         <textarea className="input-big formInput" data-input-for="selfDesc" onChange={(e) => {
                             selfDescEval(e.target);
@@ -105,7 +117,7 @@ function FormOne(props) {
                         <div style={{ position: "relative" }}>
                             <input className="input-small needsEval formInput" data-input-for="_email" type={"text"} onChange={(e) => {
                                 noBannedInputs(e.target, allowedEmailChars);
-                                formStateUpdater(e.target, "_email", emailEval, formContent, setFormContent);
+                                formStateUpdater(e.target, "_email", emailEval(e.target.value), formContent, setFormContent);
                             }} />
                             <img className="inputValidationSymbols validated" src="/images/validated.svg" />
                             <img className="inputValidationSymbols notValidated" src="/images/notValidated.svg" />
@@ -116,7 +128,7 @@ function FormOne(props) {
                         <span className="input-title">მობილურის ნომერი</span>
                         <div style={{ position: "relative" }}>
                             <input className="input-small needsEval formInput" data-input-for="_phoneNumber" placeholder="+995 000 00 00 00" type={"text"} onChange={(e) => {
-                                formStateUpdater(e.target, "_phoneNumber", numberEval, formContent, setFormContent);
+                                formStateUpdater(e.target, "_phoneNumber", numberEval(e.target.value), formContent, setFormContent);
                                 if (e.target.value.length >= 17) {
                                     e.target.value = removeTrailingWhiteSpace(e.target.value);
                                 }
