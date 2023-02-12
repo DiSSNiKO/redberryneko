@@ -62,7 +62,6 @@ body,
 .App {
   position: relative;
   min-height: 100vh;
-  padding: 3rem 0;
 }
 
 code {
@@ -377,7 +376,7 @@ textarea:focus {
 
 .image-info-cont>img {
   height: 25rem;
-  min-width: 25rem;
+  width: 25rem;
   object-fit: cover;
   border-radius: 50%;
 }
@@ -499,13 +498,28 @@ textarea:focus {
 /* final cv */
 
 .final-cv-cont {
-  width: 100%;
-  display: flex;
+  width: 50%;
+  margin: auto;
+  position: relative;
+  justify-content: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .final-cv-cont .dynamic-resume-display {
-  width: 50%;
-  margin: auto;
   padding: 3rem 5rem;
-  border: 1px solid rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  overflow-y: visible;
+}
+
+.congrats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: -45rem;
+  top: 0;
+  width: 41rem;
+  height: 16rem;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.15);
 }

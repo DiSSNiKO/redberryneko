@@ -84,6 +84,11 @@ function NewEducation(props) {
                                     e.preventDefault();
                                     formStateUpdaterDynamicHTMLForButtons(e.target, "_educationLevel",
                                         existantValue(e.target.textContent), formContent, setFormContent, experienceObjectIndex);
+                                }}>ზოგადსაგანმანათლებლო დიპლომი</button>
+                                <button onClick={(e) => {
+                                    e.preventDefault();
+                                    formStateUpdaterDynamicHTMLForButtons(e.target, "_educationLevel",
+                                        existantValue(e.target.textContent), formContent, setFormContent, experienceObjectIndex);
                                 }}>ბაკალავრი</button>
                                 <button onClick={(e) => {
                                     e.preventDefault();

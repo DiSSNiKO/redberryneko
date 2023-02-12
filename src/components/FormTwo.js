@@ -54,7 +54,7 @@ function FormTwo(props) {
             ...completeData,
             lastFormData: formContent
         }
-        // sessionStorageObj.firstFormData._photo = null;
+        finalEval(readyForSubmission, setReadyForSubmission, "educationValidated", evalFunctionPairing, formContent);
         sessionStorage.setItem("completeData", JSON.stringify(sessionStorageObj));
     });
 

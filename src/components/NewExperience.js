@@ -14,11 +14,6 @@ function NewExperience(props) {
     const jobDescriptionInpt = useRef();
     const refs = [_positionInpt, _employerInpt, _startDateInpt, endDateInpt, jobDescriptionInpt];
 
-    // useEffect(() => {
-    //     refs.forEach((inpt) => {
-    //         inpt.current.value = experience[inpt.current.dataset.inputFor];
-    //     });
-    // }, [experience]);
 
 
 
