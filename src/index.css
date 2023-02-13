@@ -611,6 +611,9 @@ textarea:focus {
     display: flex;
     flex-direction: column;
   }
+  .current-form {
+    padding-bottom: 1rem;
+  }
   .final-cv-cont .dynamic-resume-display {
     overflow-y: scroll !important;
   }
@@ -657,6 +660,9 @@ textarea:focus {
   }
 }
 @media screen and (max-width: 490px) {
+  .add-new-resume {
+    width: 30rem;
+  }
   #profile-pic {
     width: 18rem;
     height: 18rem;
