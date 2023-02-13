@@ -63,6 +63,7 @@ body,
   position: relative;
   min-height: 100vh;
   overflow: hidden;
+  
 }
 
 code {
@@ -347,6 +348,9 @@ textarea:focus {
 }
 
 /* resume style */
+#profile-pic {
+  aspect-ratio: 1/1;
+}
 .dynamic-resume-display {
   grid-area: r;
   padding: 3rem 5rem;
@@ -523,6 +527,8 @@ textarea:focus {
 .final-cv-cont .dynamic-resume-display {
   padding: 3rem 5rem;
   border: 1px solid rgba(0, 0, 0, 0.25);
+  max-height: 85rem;
+  margin-top: 2rem;
 }
 
 .congrats {
@@ -541,8 +547,8 @@ textarea:focus {
 
 @media screen and (max-width: 1200px) {
   #profile-pic {
-    width: 20rem;
-    height: 20rem;
+    min-width: 18rem;
+    height: 18rem;
   }
 }
 @media screen and (max-width:1000px) {
@@ -554,6 +560,12 @@ textarea:focus {
     }
     .go-back-button-header {
       left: 0.5rem;
+    }
+    .final-cv-cont {
+      width: 80%;
+      margin: auto;
+      position: relative;
+      justify-content: center;
     }
     #profile-pic {
       width: 18rem;
@@ -594,10 +606,13 @@ textarea:focus {
     font-size: 1.6rem;
   }
 }
-@media screen and (max-width: 690px) {
+@media screen and (max-width: 695px) {
   .form-resume-cont {
     display: flex;
     flex-direction: column;
+  }
+  .final-cv-cont .dynamic-resume-display {
+    overflow-y: scroll !important;
   }
   .add-new-experience {
     width: 25rem;
@@ -617,10 +632,6 @@ textarea:focus {
   }
   .dynamic-resume-display {
     padding: 3rem 2rem;
-  }
-  .image-info-cont {
-    align-items: start;
-    flex-direction: row;
   }
   .resume-name-and-lastname {
     display: block;
@@ -671,4 +682,8 @@ textarea:focus {
     text-align: center;
   }
   
+  .final-cv-cont .dynamic-resume-display {
+    padding: 3rem 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+  }
 }
