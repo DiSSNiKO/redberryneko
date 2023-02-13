@@ -72,7 +72,7 @@ function FormThree(props) {
             <div className="backwars-forwards-cont">
                 <Link to="/resumeForms/2" className="next-form-button no-annoying-style">უკან</Link>
                 <Link to="/finalCV" className="next-form-button no-annoying-style" onClick={(e) => {
-                    if (!finalEval(readyForSubmission, setReadyForSubmission, "workExpValidated", evalFunctionPairing, formContent)) {
+                    if (!finalEval(readyForSubmission, setReadyForSubmission, "educationValidated", evalFunctionPairing, formContent)) {
                         e.preventDefault()
                     }
                 }}>დასრულება</Link>

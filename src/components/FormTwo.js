@@ -52,9 +52,9 @@ function FormTwo(props) {
         }
         const sessionStorageObj = {
             ...completeData,
-            lastFormData: formContent
+            secondFormData: formContent
         }
-        finalEval(readyForSubmission, setReadyForSubmission, "educationValidated", evalFunctionPairing, formContent);
+        finalEval(readyForSubmission, setReadyForSubmission, "workExpValidated", evalFunctionPairing, formContent);
         sessionStorage.setItem("completeData", JSON.stringify(sessionStorageObj));
     });
 

@@ -1,19 +1,23 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom"
+import { finalEval, moreThanTwo, checkDateStart, existantValue, nameLastnameValidated, emailEval, numberEval, selfDescEval, photoEval, globalFinalEval } from "../utilities";
 
 function GreetingPage(props) {
-
+    const { completeData, setCompleteData, readyForSubmission, setReadyForSubmission } = props;
+    
     useEffect(() => {
         //useEffect for setting the current form
+        const newCompleteData = {
+            firstFormData: {},
+            secondFormData: [],
+            lastFormData: []
+        }
         if (props.currentForm !== 0) {
             props.setCurrentForm(0)
             sessionStorage.clear();
-            props.setCompleteData({
-                firstFormData: {},
-                secondFormData: [],
-                lastFormData: []
-            });
+            props.setCompleteData(newCompleteData);
         }
+        globalFinalEval(newCompleteData, readyForSubmission, setReadyForSubmission);
     });
     if (props.currentForm === 0) {
         return (

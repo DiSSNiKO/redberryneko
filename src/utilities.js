@@ -233,6 +233,15 @@ function formStateUpdaterDynamicHTMLForButtons(eTarget, formPart, validationFunc
 }
 const finalEval = (readyForSubmission, setReadyForSubmission, formNameValidated, evalFunctionPairing, formData) => {
     const currentForm = readyForSubmission;
+    if(typeof(formData)==="object"){
+        if(Object.keys(formData).length===0){
+            if (currentForm[formNameValidated]) {
+                currentForm[formNameValidated] = false;
+                setReadyForSubmission({ ...currentForm });
+            }
+            return false;
+        }
+    }
     let totalInNeedOfEval = 0;
     if (!Array.isArray(formData)) { //this way it SHOULD work for all 3.
         formData = [formData];
@@ -287,7 +296,32 @@ const finalEval = (readyForSubmission, setReadyForSubmission, formNameValidated,
         return false;
     }
 }
-
+function globalFinalEval(completeData, readyForSubmission, setReadyForSubmission){
+    const evalFunctionPairingWork = {
+        _position: moreThanTwo,
+        _employer: moreThanTwo,
+        _startDate: checkDateStart,
+        _jobDescription: existantValue,
+        _endDate: existantValue
+    }
+    const evalFunctionPairingPrivate = {
+        _name: nameLastnameValidated,
+        _lastName: nameLastnameValidated,
+        _email: emailEval,
+        _phoneNumber: numberEval,
+        selfDesc: selfDescEval,
+        _photo: photoEval
+    }
+    const evalFunctionPairingEdu = {
+        _educationLevel: moreThanTwo,
+        _educationInstitution: existantValue,
+        _endDate: existantValue,
+        _educationDescription: existantValue
+    }
+    finalEval(readyForSubmission, setReadyForSubmission, "workExpValidated", evalFunctionPairingWork, completeData.secondFormData);
+    finalEval(readyForSubmission, setReadyForSubmission, "educationValidated", evalFunctionPairingEdu, completeData.lastFormData);
+    finalEval(readyForSubmission, setReadyForSubmission, "privateInfoValidated", evalFunctionPairingPrivate, completeData.firstFormData);
+}
 function ifExistantGetDataFromMainStateAndCheckValidity(evalFunctionPairing, formContent, setFormContent, readyForSubmission, setReadyForSubmission, formNameValidated, completeData) {
     const newObj = formContent;
     Object.entries(completeData.firstFormData).forEach((keyVal) => {
@@ -380,6 +414,7 @@ function getDataFromMain(evalFunctionPairing, formContent, setFormContent, ready
     if (newArr.length === 0) {
         return 0;
     }
+    console.log(newArr, chosenForm)
     finalEval(readyForSubmission, setReadyForSubmission, formNameValidated, evalFunctionPairing, formContent);
     setFormContent(newArr);
 }
@@ -396,6 +431,6 @@ export {
     //general
     removeWhiteSpace, removeTrailingWhiteSpace, finalEval, validationStyling, formStateUpdater,
     georgianAlphabet, ifExistantGetDataFromMainStateAndCheckValidity, moreThanTwo, formStateUpdaterDynamicHTML,
-    getDataFromMain, existantValue,
+    getDataFromMain, existantValue, globalFinalEval
 
 };
