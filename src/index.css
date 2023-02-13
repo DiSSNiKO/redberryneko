@@ -250,7 +250,7 @@ textarea:focus {
 }
 
 .input-cont {
-  margin: 3.5rem 0;
+  margin: 2.5rem 0;
 }
 
 .input-title {
@@ -311,9 +311,10 @@ textarea:focus {
 
 .experiences-cont {
   margin-bottom: 2rem;
-  max-height: 62rem;
+  max-height: 55rem;
   overflow-y: scroll;
   padding: 0 0.5rem;
+  overflow-x: hidden;
 }
 
 .experiences-cont::-webkit-scrollbar {
@@ -350,6 +351,12 @@ textarea:focus {
   padding: 3rem 5rem;
   max-height: 90rem;
   overflow-y: scroll;
+
+}
+.dynamic-resume-display > img {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 0;
 }
 
 .dynamic-resume-display::-webkit-scrollbar {
@@ -509,7 +516,6 @@ textarea:focus {
 .final-cv-cont .dynamic-resume-display {
   padding: 3rem 5rem;
   border: 1px solid rgba(0, 0, 0, 0.25);
-  overflow-y: visible;
 }
 
 .congrats {
@@ -522,4 +528,51 @@ textarea:focus {
   width: 41rem;
   height: 16rem;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.15);
+}
+
+/* medias */
+
+@media screen and (max-width: 1200px) {
+  #profile-pic {
+    width: 20rem;
+    height: 20rem;
+  }
+}
+@media screen and (max-width:1000px) {
+    .dynamic-resume-display {
+      padding: 3rem 1rem;
+    }
+    .current-form-cont {
+      padding: 0 4rem;
+    }
+    .go-back-button-header {
+      left: 0.5rem;
+    }
+    #profile-pic {
+      width: 18rem;
+      height: 18rem;
+    }
+    .image-info-cont {
+      flex-direction: column-reverse;
+      align-items: center;
+    }
+    .resume-name-and-lastname {
+      display: flex;
+      justify-content: center;
+    }
+    .phone-email-cont {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      margin: 0;
+    }
+    .self-description > h1 {
+      text-align: center;
+    }
+    .self-description > div {
+      text-align: center;
+    }
+    .horizontal-two-inputs {
+      column-gap: 3rem;
+    }
 }

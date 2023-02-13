@@ -27,11 +27,11 @@ function DynamicResumeDisplay(props) {
                             <div className="about-me">{firstFormData.selfDesc}</div>
                         </div>
                     </div>
-                    <img id={"profile-pic"} src={photoEval(firstFormData._photo) ? firstFormData._photo : ""} />
+                    <img id={"profile-pic"} className={firstFormData._photo ? "" : "no-display"} src={photoEval(firstFormData._photo) ? firstFormData._photo : ""} />
                 </div>
             </div>
             <div className="work-experience-cont">
-                <h1 className="experience-title">გამოცდილება</h1>
+                <h1 className={`experience-title ${Object.keys(completeData.secondFormData).length!==0 ? "" : "no-display"}`}>გამოცდილება</h1>
                 {completeData['secondFormData'].map((expObj, kei) => {
                     return (
                         <div key={kei} className="work-experience">
@@ -46,7 +46,7 @@ function DynamicResumeDisplay(props) {
                 })}
             </div>
             <div className="education-cont">
-                <h1 className="experience-title">განათლება</h1>
+                <h1 className={`experience-title ${Object.keys(completeData.lastFormData).length!==0 ? "" : "no-display"}`}>განათლება</h1>
                 {completeData['lastFormData'].map((expObj, kei) => {
                     return (
                         <div key={kei} className="work-experience">
@@ -60,6 +60,7 @@ function DynamicResumeDisplay(props) {
                     );
                 })}
             </div>
+            <img src="/images/sussybaka.png" alt="" />
         </div>
     );
 }
