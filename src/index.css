@@ -62,6 +62,7 @@ body,
 .App {
   position: relative;
   min-height: 100vh;
+  overflow: hidden;
 }
 
 code {
@@ -349,9 +350,9 @@ textarea:focus {
 .dynamic-resume-display {
   grid-area: r;
   padding: 3rem 5rem;
-  max-height: 90rem;
+  max-height: 92rem;
   overflow-y: scroll;
-
+  overflow-x: hidden;
 }
 .dynamic-resume-display > img {
   width: 50px;
@@ -360,7 +361,13 @@ textarea:focus {
 }
 
 .dynamic-resume-display::-webkit-scrollbar {
-  display: none;
+  width: 10px;
+	background-color: #F5F5F5;
+}
+.dynamic-resume-display::-webkit-scrollbar-thumb
+{
+	background-color: #00000080;
+	border: 2px solid transparent;
 }
 
 .image-info-cont {
@@ -575,4 +582,93 @@ textarea:focus {
     .horizontal-two-inputs {
       column-gap: 3rem;
     }
+}
+@media screen and (max-width: 800px) {
+  .horizontal-two-inputs {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+}
+@media screen and (max-width: 750px) {
+  .posemp-title {
+    font-size: 1.6rem;
+  }
+}
+@media screen and (max-width: 690px) {
+  .form-resume-cont {
+    display: flex;
+    flex-direction: column;
+  }
+  .add-new-experience {
+    width: 25rem;
+    margin: auto;
+  }
+  .next-form-button {
+    width: auto;
+  }
+  body, .root, .App {
+    overflow-y: scroll;
+  }
+  .dynamic-resume-display {
+    overflow: visible;
+  }
+  .posemp-title {
+    font-size: 1.8rem;
+  }
+  .dynamic-resume-display {
+    padding: 3rem 2rem;
+  }
+  .image-info-cont {
+    align-items: start;
+    flex-direction: row;
+  }
+  .resume-name-and-lastname {
+    display: block;
+  }
+  .phone-email-cont {
+    display: block;
+  }
+  .self-description > h1 {
+    text-align: left;
+  }
+  .self-description > div {
+    text-align: left;
+  }
+  #profile-pic {
+    min-width: 22rem;
+    height: 22rem;
+  }
+}
+@media screen and (max-width: 545px){
+  #profile-pic {
+    min-width: 20rem;
+    height: 20rem;
+  }
+}
+@media screen and (max-width: 490px) {
+  #profile-pic {
+    width: 18rem;
+    height: 18rem;
+  }
+  .image-info-cont {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+  .resume-name-and-lastname {
+    display: flex;
+    justify-content: center;
+  }
+  .phone-email-cont {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 0;
+  }
+  .self-description > h1 {
+    text-align: center;
+  }
+  .self-description > div {
+    text-align: center;
+  }
+  
 }
