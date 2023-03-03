@@ -191,13 +191,8 @@ function formStateUpdater(eTarget, formPart, validationFunctionResult, formConte
         ...formContent
     }
     validationStyling(eTarget, validationFunctionResult)
-    if (validationFunctionResult) {
-        newObject[formPart] = eTarget.value;
-        setFormContent(newObject);
-    } else {
-        newObject[formPart] = null;
-        setFormContent(newObject);
-    }
+    newObject[formPart] = eTarget.value;
+    setFormContent(newObject);
 }
 function formStateUpdaterDynamicHTML(eTarget, formPart, validationFunctionResult, formContent, setFormContent, changeIndex) {
     const arai = [...formContent];
@@ -205,15 +200,9 @@ function formStateUpdaterDynamicHTML(eTarget, formPart, validationFunctionResult
         ...formContent[changeIndex]
     }
     validationStyling(eTarget, validationFunctionResult);
-    if (validationFunctionResult) {
-        newObject[formPart] = eTarget.value;
-        arai[changeIndex] = newObject;
-        setFormContent(arai);
-    } else {
-        newObject[formPart] = null;
-        arai[changeIndex] = newObject;
-        setFormContent(arai);
-    }
+    newObject[formPart] = eTarget.value;
+    arai[changeIndex] = newObject;
+    setFormContent(arai);
 }
 function formStateUpdaterDynamicHTMLForButtons(eTarget, formPart, validationFunctionResult, formContent, setFormContent, changeIndex) {
     const arai = [...formContent];
@@ -221,16 +210,12 @@ function formStateUpdaterDynamicHTMLForButtons(eTarget, formPart, validationFunc
         ...formContent[changeIndex]
     }
     validationStyling(eTarget, validationFunctionResult);
-    if (validationFunctionResult) {
-        newObject[formPart] = eTarget.textContent;
-        arai[changeIndex] = newObject;
-        setFormContent(arai);
-    } else {
-        newObject[formPart] = null;
-        arai[changeIndex] = newObject;
-        setFormContent(arai);
-    }
+    newObject[formPart] = eTarget.textContent;
+    arai[changeIndex] = newObject;
+    setFormContent(arai);
 }
+
+
 const finalEval = (readyForSubmission, setReadyForSubmission, formNameValidated, evalFunctionPairing, formData) => {
     const currentForm = readyForSubmission;
     if(typeof(formData)==="object"){
@@ -245,8 +230,7 @@ const finalEval = (readyForSubmission, setReadyForSubmission, formNameValidated,
     let totalInNeedOfEval = 0;
     if (!Array.isArray(formData)) { //this way it SHOULD work for all 3.
         formData = [formData];
-    }
-    Object.keys(formData[0]).forEach((key) => {
+    }    Object.keys(formData[0]).forEach((key) => {
         if (key[0] === "_") {
             totalInNeedOfEval++;
         }
@@ -257,19 +241,19 @@ const finalEval = (readyForSubmission, setReadyForSubmission, formNameValidated,
         Object.keys(evalFunctionPairing).forEach((key) => {
             if (Object.keys(dataObj).includes(key) && key[0] === "_") {
                 if (key === "_startDate") {
-                    if (evalFunctionPairing[key](dataObj)) {
+                    if (evalFunctionPairing[key](dataObj["_startDate"], dataObj["_endDate"])) {
                         successes++;
+                    }
+                } else if (key === "_endDate" && dataObj['_startDate']) {
+                    if(dataObj["_startDate"]){
+                        if(evalFunctionPairing['_startDate'](dataObj["_startDate"], dataObj["_endDate"])&&dataObj[key]){
+                            successes++;
+                        }
                     }
                 } else {
                     if (key[0] === "_") {
-                        if (key !== "_photo") {
-                            if (evalFunctionPairing[key](dataObj[key])) {
-                                successes++;
-                            }
-                        } else {
-                            if (dataObj[key] !== null && dataObj[key] !== '') {
-                                successes++;
-                            }
+                        if (evalFunctionPairing[key](dataObj[key])) {
+                            successes++;
                         }
                     } else {
                         if (dataObj[key]) {
@@ -400,21 +384,12 @@ function existantValue(val) {
         return false;
     }
 }
-// function existantValueAndStyle(eTarget) {
-//     const valu = existantValue(eTarget.value);
-//     if (existantValue(eTarget.value)) {
-//         eTarget.classList.add('validation-success');
-//     } else {
-//         eTarget.classList.remove('validation-success');
-//     }
-//     return valu;
-// }
+
 function getDataFromMain(evalFunctionPairing, formContent, setFormContent, readyForSubmission, setReadyForSubmission, formNameValidated, completeData, chosenForm) {
     const newArr = completeData[chosenForm];
     if (newArr.length === 0) {
         return 0;
     }
-    console.log(newArr, chosenForm)
     finalEval(readyForSubmission, setReadyForSubmission, formNameValidated, evalFunctionPairing, formContent);
     setFormContent(newArr);
 }

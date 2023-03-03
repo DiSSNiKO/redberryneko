@@ -23,6 +23,7 @@ function App() {
     educationValidated: false
   }) //when all 3 are true, CV is ready for POST (Ready in general)
   useEffect(()=>{
+    console.log(completeData)
     globalFinalEval(completeData, readyForSubmission, setReadyForSubmission);
   },[]);
   const [currentForm, setCurrentForm] = useState(0); //0 for none, 1/2/3 for actual forms. 

@@ -22,10 +22,20 @@ function NewExperience(props) {
             refs.forEach((inpt) => {
                 inpt = inpt.current;
                 inpt.value = subFormContent[inpt.dataset.inputFor];
-                if (inpt.dataset.inputFor[0] === "_") {
-                    validationStyling(inpt, evalFunctionPairing[inpt.dataset.inputFor](inpt.value));
+            });
+            refs.forEach((inpt) => {
+                inpt = inpt.current;
+                const exceptions = ['_startDate'];
+                const inputfor = inpt.dataset.inputFor;
+                if (inputfor[0] === "_") {
+                    if(!exceptions.includes(inputfor)){
+                        validationStyling(inpt, evalFunctionPairing[inputfor](inpt.value));
+                    } else {
+                        validationStyling(inpt, evalFunctionPairing["_startDate"](inpt.value, endDateInpt.current.value));
+                    }
+                    
                 } else {
-                    evalFunctionPairing[inpt.dataset.inputFor](inpt);
+                    evalFunctionPairing[inputfor](inpt);
                 }
             });
             setDataAcquired(true);
@@ -63,6 +73,7 @@ function NewExperience(props) {
                         <input ref={_startDateInpt} className="input-small needsEval formInput work-start-date" data-input-for="_startDate" type={"date"} onChange={(e) => {
                             const startDate = e.target.value;
                             const endDate = e.target.closest(".horizontal-two-inputs").querySelector(".work-end-date").value;
+                            formStateUpdaterDynamicHTML(endDateInpt.current, "_endDate", (existantValue(endDate)&&checkDateStart(startDate, endDate)), formContent, setFormContent, experienceObjectIndex);
                             formStateUpdaterDynamicHTML(e.target, "_startDate", checkDateStart(startDate, endDate), formContent, setFormContent, experienceObjectIndex);
                         }} />
                         <img className="inputValidationSymbols validated no-display" src="/images/validated.svg" />
@@ -75,7 +86,8 @@ function NewExperience(props) {
                         <input ref={endDateInpt} className="input-small needsEval formInput work-end-date" data-input-for="_endDate" type={"date"} onChange={(e) => {
                             const endDate = e.target.value;
                             const startDate = e.target.closest(".horizontal-two-inputs").querySelector(".work-start-date").value;
-                            formStateUpdaterDynamicHTML(e.target, "_endDate", (existantValue(endDate) && checkDateStart(startDate, endDate)), formContent, setFormContent, experienceObjectIndex);
+                            formStateUpdaterDynamicHTML(_startDateInpt.current, "_startDate", checkDateStart(startDate, endDate), formContent, setFormContent, experienceObjectIndex);
+                            formStateUpdaterDynamicHTML(e.target, "_endDate", (existantValue(endDate)&&checkDateStart(startDate, endDate)), formContent, setFormContent, experienceObjectIndex);
                         }} />
                         <img className="inputValidationSymbols validated no-display" src="/images/validated.svg" />
                         <img className="inputValidationSymbols notValidated no-display" src="/images/notValidated.svg" />

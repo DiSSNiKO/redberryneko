@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
     removeTrailingWhiteSpace,
-    removeWhiteSpace, finalEval,
+    getDataFromMain, finalEval,
     formStateUpdater,
     noBannedInputs,
     ifExistantGetDataFromMainStateAndCheckValidity,
@@ -35,14 +35,6 @@ function FormTwo(props) {
         _startDate: checkDateStart,
         _jobDescription: existantValue,
         _endDate: existantValue
-    }
-    function getDataFromMain(evalFunctionPairing, formContent, setFormContent, readyForSubmission, setReadyForSubmission, formNameValidated, completeData, chosenForm) {
-        const newArr = completeData[chosenForm];
-        if (newArr.length === 0) {
-            return 0;
-        }
-        finalEval(readyForSubmission, setReadyForSubmission, formNameValidated, evalFunctionPairing, formContent);
-        setFormContent(newArr);
     }
     const { currentForm, setCurrentForm, completeData, readyForSubmission, setReadyForSubmission } = props;
 
