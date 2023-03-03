@@ -63,7 +63,6 @@ body,
   position: relative;
   min-height: 100vh;
   overflow-x: hidden;
-  
 }
 
 code {
@@ -354,8 +353,8 @@ textarea:focus {
 .dynamic-resume-display {
   grid-area: r;
   padding: 3rem 5rem;
-  max-height: 92rem;
-  overflow-y: scroll;
+  /* max-height: 92rem; */
+  /* overflow-y: scroll; */
   overflow-x: hidden;
 }
 .dynamic-resume-display > img {
@@ -364,11 +363,11 @@ textarea:focus {
   margin-bottom: 0;
 }
 
-.dynamic-resume-display::-webkit-scrollbar {
-  width: 10px;
+body::-webkit-scrollbar {
+  width: 8px;
 	background-color: #F5F5F5;
 }
-.dynamic-resume-display::-webkit-scrollbar-thumb
+body::-webkit-scrollbar-thumb
 {
 	background-color: #00000080;
 	border: 2px solid transparent;
@@ -524,10 +523,10 @@ textarea:focus {
   margin-bottom: 2rem;
 }
 
+
 .final-cv-cont .dynamic-resume-display {
   padding: 3rem 5rem;
   border: 1px solid rgba(0, 0, 0, 0.25);
-  max-height: 85rem;
   margin-top: 2rem;
 }
 
@@ -614,18 +613,12 @@ textarea:focus {
   .current-form {
     padding-bottom: 1rem;
   }
-  .final-cv-cont .dynamic-resume-display {
-    overflow-y: scroll !important;
-  }
   .add-new-experience {
     width: 25rem;
     margin: auto;
   }
   .next-form-button {
     width: auto;
-  }
-  body, .root, .App {
-    overflow-y: scroll;
   }
   .dynamic-resume-display {
     overflow: visible;
