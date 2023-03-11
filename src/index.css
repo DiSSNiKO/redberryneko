@@ -112,8 +112,8 @@ code {
 
 .form-resume-cont {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-template-areas: "f f f f f f f r r r r r";
+  grid-template-columns: repeat(20, 1fr);
+  grid-template-areas: "f f f f f f f f f f f r r r r r r r r r";
 }
 
 .progression-header {
@@ -312,8 +312,6 @@ textarea:focus {
 
 .experiences-cont {
   margin-bottom: 2rem;
-  max-height: 55rem;
-  overflow-y: scroll;
   padding: 0 0.5rem;
   overflow-x: hidden;
 }
@@ -350,6 +348,7 @@ textarea:focus {
 #profile-pic {
   aspect-ratio: 1/1;
 }
+
 .dynamic-resume-display {
   grid-area: r;
   padding: 3rem 5rem;
@@ -357,7 +356,8 @@ textarea:focus {
   /* overflow-y: scroll; */
   overflow-x: hidden;
 }
-.dynamic-resume-display > img {
+
+.dynamic-resume-display>img {
   width: 50px;
   height: 50px;
   margin-bottom: 0;
@@ -365,12 +365,12 @@ textarea:focus {
 
 body::-webkit-scrollbar {
   width: 8px;
-	background-color: #F5F5F5;
+  background-color: #F5F5F5;
 }
-body::-webkit-scrollbar-thumb
-{
-	background-color: #00000080;
-	border: 2px solid transparent;
+
+body::-webkit-scrollbar-thumb {
+  background-color: #00000080;
+  border: 2px solid transparent;
 }
 
 .image-info-cont {
@@ -486,6 +486,7 @@ body::-webkit-scrollbar-thumb
 }
 
 .education-levels {
+  z-index: 1;
   position: absolute;
   left: 0;
   width: 100%;
@@ -535,11 +536,15 @@ body::-webkit-scrollbar-thumb
   align-items: center;
   justify-content: center;
   position: absolute;
-  right: -45rem;
+  right: -31rem;
   top: 0;
-  width: 41rem;
+  width: 30rem;
   height: 16rem;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.15);
+}
+
+.congrats h2 {
+  text-align: center;
 }
 
 /* medias */
@@ -550,137 +555,170 @@ body::-webkit-scrollbar-thumb
     height: 18rem;
   }
 }
+
 @media screen and (max-width:1000px) {
-    .dynamic-resume-display {
-      padding: 3rem 1rem;
-    }
-    .current-form-cont {
-      padding: 0 4rem;
-    }
-    .go-back-button-header {
-      left: 0.5rem;
-    }
-    .final-cv-cont {
-      width: 80%;
-      margin: auto;
-      position: relative;
-      justify-content: center;
-    }
-    #profile-pic {
-      width: 18rem;
-      height: 18rem;
-    }
-    .image-info-cont {
-      flex-direction: column-reverse;
-      align-items: center;
-    }
-    .resume-name-and-lastname {
-      display: flex;
-      justify-content: center;
-    }
-    .phone-email-cont {
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      margin: 0;
-    }
-    .self-description > h1 {
-      text-align: center;
-    }
-    .self-description > div {
-      text-align: center;
-    }
-    .horizontal-two-inputs {
-      column-gap: 3rem;
-    }
-}
-@media screen and (max-width: 800px) {
-  .horizontal-two-inputs {
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr;
+  .dynamic-resume-display {
+    padding: 3rem 1rem;
   }
-}
-@media screen and (max-width: 750px) {
-  .posemp-title {
-    font-size: 1.6rem;
+
+  .current-form-cont {
+    padding: 0 4rem;
   }
-}
-@media screen and (max-width: 695px) {
-  .form-resume-cont {
-    display: flex;
-    flex-direction: column;
+
+  .go-back-button-header {
+    left: 0.5rem;
   }
-  .current-form {
-    padding-bottom: 1rem;
-  }
-  .add-new-experience {
-    width: 25rem;
+
+  .final-cv-cont {
+    width: 80%;
     margin: auto;
+    position: relative;
+    justify-content: center;
   }
-  .next-form-button {
-    width: auto;
-  }
-  .dynamic-resume-display {
-    overflow: visible;
-  }
-  .posemp-title {
-    font-size: 1.8rem;
-  }
-  .dynamic-resume-display {
-    padding: 3rem 2rem;
-  }
-  .resume-name-and-lastname {
-    display: block;
-  }
-  .phone-email-cont {
-    display: block;
-  }
-  .self-description > h1 {
-    text-align: left;
-  }
-  .self-description > div {
-    text-align: left;
-  }
-  #profile-pic {
-    min-width: 22rem;
-    height: 22rem;
-  }
-}
-@media screen and (max-width: 545px){
-  #profile-pic {
-    min-width: 20rem;
-    height: 20rem;
-  }
-}
-@media screen and (max-width: 490px) {
-  .add-new-resume {
-    width: 30rem;
-  }
+
   #profile-pic {
     width: 18rem;
     height: 18rem;
   }
+
   .image-info-cont {
     flex-direction: column-reverse;
     align-items: center;
   }
+
   .resume-name-and-lastname {
     display: flex;
     justify-content: center;
   }
+
   .phone-email-cont {
     display: flex;
     align-items: center;
     flex-direction: column;
     margin: 0;
   }
-  .self-description > h1 {
+
+  .self-description>h1 {
     text-align: center;
   }
-  .self-description > div {
+
+  .self-description>div {
     text-align: center;
   }
-  
+
+  .horizontal-two-inputs {
+    column-gap: 3rem;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .horizontal-two-inputs {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .posemp-title {
+    font-size: 1.6rem;
+  }
+}
+
+@media screen and (max-width: 695px) {
+  .form-resume-cont {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .current-form {
+    padding-bottom: 1rem;
+  }
+
+  .add-new-experience {
+    width: 25rem;
+    margin: auto;
+  }
+
+  .next-form-button {
+    width: auto;
+  }
+
+  .dynamic-resume-display {
+    overflow: visible;
+  }
+
+  .posemp-title {
+    font-size: 1.8rem;
+  }
+
+  .dynamic-resume-display {
+    padding: 3rem 2rem;
+  }
+
+  .resume-name-and-lastname {
+    display: block;
+  }
+
+  .phone-email-cont {
+    display: block;
+  }
+
+  .self-description>h1 {
+    text-align: left;
+  }
+
+  .self-description>div {
+    text-align: left;
+  }
+
+  #profile-pic {
+    min-width: 22rem;
+    height: 22rem;
+  }
+}
+
+@media screen and (max-width: 545px) {
+  #profile-pic {
+    min-width: 20rem;
+    height: 20rem;
+  }
+}
+
+@media screen and (max-width: 490px) {
+  .add-new-resume {
+    width: 30rem;
+  }
+
+  #profile-pic {
+    width: 18rem;
+    height: 18rem;
+  }
+
+  .image-info-cont {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  .resume-name-and-lastname {
+    display: flex;
+    justify-content: center;
+  }
+
+  .phone-email-cont {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 0;
+  }
+
+  .self-description>h1 {
+    text-align: center;
+  }
+
+  .self-description>div {
+    text-align: center;
+  }
+
   .final-cv-cont .dynamic-resume-display {
     padding: 3rem 1rem;
     border: 1px solid rgba(0, 0, 0, 0.25);

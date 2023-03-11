@@ -13,19 +13,22 @@ function App() {
     secondFormData: [],
     lastFormData: []
   }
+  const [profilePicture, setProfilePicture] = useState(
+    JSON.parse(sessionStorage.getItem("jetBoyRedBerryPfp")) || null
+
+  )
   const [completeData, setCompleteData] = useState(
     // _VARNAME data with validation, just VARNAME is optional data.
-    JSON.parse(sessionStorage.getItem("completeData")) || emptyCompleteData
+    JSON.parse(sessionStorage.getItem("jetBoyRedBerryCompleteData")) || emptyCompleteData
   );
   const [readyForSubmission, setReadyForSubmission] = useState({
     privateInfoValidated: false,
     workExpValidated: false,
     educationValidated: false
   }) //when all 3 are true, CV is ready for POST (Ready in general)
-  useEffect(()=>{
-    console.log(completeData)
-    globalFinalEval(completeData, readyForSubmission, setReadyForSubmission);
-  },[]);
+  useEffect(() => {
+    globalFinalEval(completeData, readyForSubmission, setReadyForSubmission, profilePicture);
+  }, []);
   const [currentForm, setCurrentForm] = useState(0); //0 for none, 1/2/3 for actual forms. 
   return (
     <div className="App">
@@ -33,14 +36,14 @@ function App() {
       <Routes>
 
         {/*greeting page*/}
-        <Route exact path="/" element={<GreetingPage currentForm={currentForm} setCurrentForm={setCurrentForm} completeData={completeData} readyForSubmission={readyForSubmission} setReadyForSubmission={setReadyForSubmission} setCompleteData={setCompleteData} />} />
-        <Route exact path="/home" element={<GreetingPage currentForm={currentForm} setCurrentForm={setCurrentForm} completeData={completeData} readyForSubmission={readyForSubmission} setReadyForSubmission={setReadyForSubmission} setCompleteData={setCompleteData} />} />
+        <Route exact path="/" element={<GreetingPage setProfilePicture={setProfilePicture} profilePicture={profilePicture} currentForm={currentForm} setCurrentForm={setCurrentForm} completeData={completeData} readyForSubmission={readyForSubmission} setReadyForSubmission={setReadyForSubmission} setCompleteData={setCompleteData} />} />
+        <Route exact path="/home" element={<GreetingPage setProfilePicture={setProfilePicture} profilePicture={profilePicture} currentForm={currentForm} setCurrentForm={setCurrentForm} completeData={completeData} readyForSubmission={readyForSubmission} setReadyForSubmission={setReadyForSubmission} setCompleteData={setCompleteData} />} />
 
         {/*forms*/}
-        <Route exact path="/resumeForms/1" element={<FormAndResume readyForSubmission={readyForSubmission} setReadyForSubmission={setReadyForSubmission} currentForm={currentForm} setCurrentForm={setCurrentForm} newFormVal={1} completeData={completeData} setCompleteData={setCompleteData} />} />
-        <Route exact path="/resumeForms/2" element={<FormAndResume readyForSubmission={readyForSubmission} setReadyForSubmission={setReadyForSubmission} currentForm={currentForm} setCurrentForm={setCurrentForm} newFormVal={2} completeData={completeData} setCompleteData={setCompleteData} />} />
-        <Route exact path="/resumeForms/3" element={<FormAndResume readyForSubmission={readyForSubmission} setReadyForSubmission={setReadyForSubmission} currentForm={currentForm} setCurrentForm={setCurrentForm} newFormVal={3} completeData={completeData} setCompleteData={setCompleteData} />} />
-        <Route exact path="/finalCV" element={<FinalCv completeData={completeData} />} />
+        <Route exact path="/resumeForms/1" element={<FormAndResume profilePicture={profilePicture} setProfilePicture={setProfilePicture} readyForSubmission={readyForSubmission} setReadyForSubmission={setReadyForSubmission} currentForm={currentForm} setCurrentForm={setCurrentForm} newFormVal={1} completeData={completeData} setCompleteData={setCompleteData} />} />
+        <Route exact path="/resumeForms/2" element={<FormAndResume profilePicture={profilePicture} setProfilePicture={setProfilePicture} readyForSubmission={readyForSubmission} setReadyForSubmission={setReadyForSubmission} currentForm={currentForm} setCurrentForm={setCurrentForm} newFormVal={2} completeData={completeData} setCompleteData={setCompleteData} />} />
+        <Route exact path="/resumeForms/3" element={<FormAndResume profilePicture={profilePicture} setProfilePicture={setProfilePicture} readyForSubmission={readyForSubmission} setReadyForSubmission={setReadyForSubmission} currentForm={currentForm} setCurrentForm={setCurrentForm} newFormVal={3} completeData={completeData} setCompleteData={setCompleteData} />} />
+        <Route exact path="/finalCV" element={<FinalCv completeData={completeData} profilePicture={profilePicture} />} />
 
       </Routes>
     </div>

@@ -4,15 +4,14 @@ import DynamicResumeDisplay from "./DynamicResumeDisplay";
 import { removeWhiteSpace } from "../utilities";
 
 function FinalCv(props) {
-    const { completeData } = props
+    const { completeData, profilePicture } = props;
     const equalsPrivate = {
         _name: "name",
         _lastName: "surname",
         _phoneNumber: "phone_number",
         _email: "email",
         selfDesc: "about_me",
-        _photo: "image"
-    }
+    };
     const tfui = {
         "საშუალო სკოლის დიპლომი": 1,
         "ზოგადსაგანმანათლებლო დიპლომი": 2,
@@ -23,7 +22,7 @@ function FinalCv(props) {
         "სტუდენტი": 7,
         "კოლეჯი(უხარისხო ხდდ)": 8,
         "სხვა": 9,
-    }
+    };
     const equalsWorkExp = {
         //_VARNAME for data that needs validation
         _position: "position",
@@ -55,7 +54,7 @@ function FinalCv(props) {
             "phone_number": "",
             "experiences": [],
             "educations": [],
-            "image": "",
+            "image": "lol?",
             "about_me": ""
         }
         const feerst = completeData.firstFormData;
@@ -68,6 +67,7 @@ function FinalCv(props) {
                 Object.keys(feerst).forEach((key) => {
                     bigObject[eqPrivate[key]] = feerst[key];
                 });
+                bigObject.image = profilePicture
                 // bigObject.image = blob;
                 sekund.forEach((dataObj) => {
                     let workExperience = {};
@@ -89,12 +89,11 @@ function FinalCv(props) {
                     bigObject["educations"].push(education);
                 });
                 bigObject['image'] = dataURLtoBlob(bigObject.image);
-                console.log(bigObject.image)
                 axios.post("https://resume.redberryinternship.ge/api/cvs", bigObject, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
-                }).then(res => console.log(res));
+                }).then(res => res);
             });
     }
     useEffect(() => {
@@ -126,13 +125,12 @@ function FinalCv(props) {
         "image": "/storage/images/0rI7LyNRJRrokoSKUTb9EKvNuyYFKOvUmDQWoFt6.png",
         "about_me": "ეს არის აღწერა ჩემს შესახებ"
     }
-    const goodMessage = 'რეზიუმე წარმატებით გაგზავნილია ! 🎂';
-    const badMessage = 'რეზიუმე ვერ გაიგზავნა 💀💀'
+    const goodMessage = 'რეზიუმე წარმატებით გაგზავნილია (იმედია ლოლ)! 🎂';
     return (
         <div className="final-cv-cont">
-            <DynamicResumeDisplay completeData={completeData} />
+            <DynamicResumeDisplay completeData={completeData} profilePicture={profilePicture} />
             <div className="congrats">
-                <h1>{goodMessage}</h1>
+                <h2>{goodMessage}</h2>
                 <img src="/images/iks.svg" alt="" style={{ position: "absolute", right: "5px", top: "5px", cursor: "pointer" }} onClick={(e) => {
                     e.target.closest(".congrats").style.display = "none"
                 }} />

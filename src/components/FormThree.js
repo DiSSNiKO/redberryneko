@@ -26,7 +26,7 @@ function FormThree(props) {
         _endDate: existantValue,
         _educationDescription: existantValue
     }
-    const { currentForm, setCurrentForm, completeData, readyForSubmission, setReadyForSubmission } = props;
+    const { currentForm, setCurrentForm, completeData, readyForSubmission, setReadyForSubmission, profilePicture } = props;
 
     useEffect(() => {
         if (currentForm !== 3) {
@@ -37,7 +37,8 @@ function FormThree(props) {
             lastFormData: formContent
         }
         finalEval(readyForSubmission, setReadyForSubmission, "educationValidated", evalFunctionPairing, formContent);
-        sessionStorage.setItem("completeData", JSON.stringify(sessionStorageObj));
+        sessionStorage.setItem("jetBoyRedBerryCompleteData", JSON.stringify(sessionStorageObj));
+        sessionStorage.setItem("jetBoyRedBerryPfp", JSON.stringify(profilePicture));
     });
 
     useEffect(() => {

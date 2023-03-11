@@ -18,7 +18,6 @@ function FormOne(props) {
         _phoneNumber: null,
         _email: null,
         selfDesc: null,
-        _photo: null
     });
     const evalFunctionPairing = {
         _name: nameLastnameValidated,
@@ -26,9 +25,8 @@ function FormOne(props) {
         _email: emailEval,
         _phoneNumber: numberEval,
         selfDesc: selfDescEval,
-        _photo: photoEval
     }
-    const { currentForm, setCurrentForm, completeData, readyForSubmission, setReadyForSubmission } = props;
+    const { currentForm, setCurrentForm, completeData, readyForSubmission, setReadyForSubmission, profilePicture, setProfilePicture } = props;
     useEffect(() => {
         if (currentForm !== 1) {
             setCurrentForm(1);
@@ -37,7 +35,8 @@ function FormOne(props) {
             ...completeData,
             firstFormData: formContent
         }
-        sessionStorage.setItem("completeData", JSON.stringify(sessionStorageObj));
+        sessionStorage.setItem("jetBoyRedBerryCompleteData", JSON.stringify(sessionStorageObj));
+        sessionStorage.setItem("jetBoyRedBerryPfp", JSON.stringify(profilePicture));
     });
     useEffect(() => {
         if (justMounted) {
@@ -48,8 +47,16 @@ function FormOne(props) {
                 firstFormData: formContent
             })
         }
-        finalEval(readyForSubmission, setReadyForSubmission, "privateInfoValidated", evalFunctionPairing, formContent);
-    }, [formContent]);
+        if (profilePicture) {
+            finalEval(readyForSubmission, setReadyForSubmission, "privateInfoValidated", evalFunctionPairing, formContent);
+        } else {
+            const validationsObjekt = {
+                ...readyForSubmission
+            }
+            validationsObjekt['privateInfoValidated'] = false;
+            setReadyForSubmission(validationsObjekt);
+        }
+    }, [formContent, profilePicture]);
     useEffect(() => {
         ifExistantGetDataFromMainStateAndCheckValidity(evalFunctionPairing, formContent, setFormContent, readyForSubmission, setReadyForSubmission, "privateInfoValidated", completeData);
     }, []);
@@ -95,7 +102,7 @@ function FormOne(props) {
                                 fr.addEventListener('load', () => {
                                     const image = fr.result;
                                     obj[photoString] = image;
-                                    setFormContent(obj)
+                                    setProfilePicture(image);
                                 });
                             }
                         }} />

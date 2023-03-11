@@ -36,7 +36,7 @@ function FormTwo(props) {
         _jobDescription: existantValue,
         _endDate: existantValue
     }
-    const { currentForm, setCurrentForm, completeData, readyForSubmission, setReadyForSubmission } = props;
+    const { currentForm, setCurrentForm, completeData, readyForSubmission, setReadyForSubmission, profilePicture } = props;
 
     useEffect(() => {
         if (currentForm !== 2) {
@@ -47,7 +47,8 @@ function FormTwo(props) {
             secondFormData: formContent
         }
         finalEval(readyForSubmission, setReadyForSubmission, "workExpValidated", evalFunctionPairing, formContent);
-        sessionStorage.setItem("completeData", JSON.stringify(sessionStorageObj));
+        sessionStorage.setItem("jetBoyRedBerryCompleteData", JSON.stringify(sessionStorageObj));
+        sessionStorage.setItem("jetBoyRedBerryPfp", JSON.stringify(profilePicture));
     });
 
     useEffect(() => {

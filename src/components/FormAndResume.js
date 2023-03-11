@@ -6,7 +6,7 @@ import FormThree from "./FormThree";
 import DynamicResumeDisplay from "./DynamicResumeDisplay";
 
 function FormAndResume(props) {
-    const { currentForm, setCurrentForm, newFormVal, readyForSubmission, setReadyForSubmission } = props;
+    const { currentForm, setCurrentForm, newFormVal, readyForSubmission, setReadyForSubmission, profilePicture, setProfilePicture } = props;
     const headerText = {
         1: "პირადი ინფო",
         2: "გამოცდილება",
@@ -18,9 +18,9 @@ function FormAndResume(props) {
         }
     });
     const availableForms = {
-        1: <FormOne readyForSubmission={readyForSubmission} setReadyForSubmission={setReadyForSubmission} currentForm={currentForm} setCurrentForm={setCurrentForm} completeData={props.completeData} setCompleteData={props.setCompleteData} />,
-        2: <FormTwo readyForSubmission={readyForSubmission} setReadyForSubmission={setReadyForSubmission} currentForm={currentForm} setCurrentForm={setCurrentForm} completeData={props.completeData} setCompleteData={props.setCompleteData} />,
-        3: <FormThree readyForSubmission={readyForSubmission} setReadyForSubmission={setReadyForSubmission} currentForm={currentForm} setCurrentForm={setCurrentForm} completeData={props.completeData} setCompleteData={props.setCompleteData} />
+        1: <FormOne setProfilePicture={setProfilePicture} profilePicture={profilePicture} readyForSubmission={readyForSubmission} setReadyForSubmission={setReadyForSubmission} currentForm={currentForm} setCurrentForm={setCurrentForm} completeData={props.completeData} setCompleteData={props.setCompleteData} />,
+        2: <FormTwo profilePicture={profilePicture} readyForSubmission={readyForSubmission} setReadyForSubmission={setReadyForSubmission} currentForm={currentForm} setCurrentForm={setCurrentForm} completeData={props.completeData} setCompleteData={props.setCompleteData} />,
+        3: <FormThree profilePicture={profilePicture} readyForSubmission={readyForSubmission} setReadyForSubmission={setReadyForSubmission} currentForm={currentForm} setCurrentForm={setCurrentForm} completeData={props.completeData} setCompleteData={props.setCompleteData} />
     }
     if (currentForm === newFormVal) {
         return (
@@ -32,7 +32,7 @@ function FormAndResume(props) {
                     </div>
                     {availableForms[currentForm]}
                 </div>
-                <DynamicResumeDisplay completeData={props.completeData} />
+                <DynamicResumeDisplay completeData={props.completeData} profilePicture={profilePicture} />
             </div>
         );
     }

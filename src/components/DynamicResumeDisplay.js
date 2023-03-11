@@ -1,7 +1,7 @@
 import { photoEval } from "../utilities";
 
 function DynamicResumeDisplay(props) {
-    const { completeData } = props;
+    const { completeData, profilePicture } = props;
     const firstFormData = completeData.firstFormData;
     return (
         <div className="dynamic-resume-display">
@@ -27,11 +27,11 @@ function DynamicResumeDisplay(props) {
                             <div className="about-me">{firstFormData.selfDesc}</div>
                         </div>
                     </div>
-                    <img id={"profile-pic"} className={firstFormData._photo ? "" : "no-display"} src={photoEval(firstFormData._photo) ? firstFormData._photo : ""} />
+                    <img id={"profile-pic"} className={profilePicture ? "" : "no-display"} src={photoEval(profilePicture) ? profilePicture : ""} />
                 </div>
             </div>
             <div className="work-experience-cont">
-                <h1 className={`experience-title ${Object.keys(completeData.secondFormData).length!==0 ? "" : "no-display"}`}>გამოცდილება</h1>
+                <h1 className={`experience-title ${Object.keys(completeData.secondFormData).length !== 0 ? "" : "no-display"}`}>გამოცდილება</h1>
                 {completeData['secondFormData'].map((expObj, kei) => {
                     return (
                         <div key={kei} className="work-experience">
@@ -46,7 +46,7 @@ function DynamicResumeDisplay(props) {
                 })}
             </div>
             <div className="education-cont">
-                <h1 className={`experience-title ${Object.keys(completeData.lastFormData).length!==0 ? "" : "no-display"}`}>განათლება</h1>
+                <h1 className={`experience-title ${Object.keys(completeData.lastFormData).length !== 0 ? "" : "no-display"}`}>განათლება</h1>
                 {completeData['lastFormData'].map((expObj, kei) => {
                     return (
                         <div key={kei} className="work-experience">

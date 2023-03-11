@@ -218,8 +218,8 @@ function formStateUpdaterDynamicHTMLForButtons(eTarget, formPart, validationFunc
 
 const finalEval = (readyForSubmission, setReadyForSubmission, formNameValidated, evalFunctionPairing, formData) => {
     const currentForm = readyForSubmission;
-    if(typeof(formData)==="object"){
-        if(Object.keys(formData).length===0){
+    if (typeof (formData) === "object") {
+        if (Object.keys(formData).length === 0) {
             if (currentForm[formNameValidated]) {
                 currentForm[formNameValidated] = false;
                 setReadyForSubmission({ ...currentForm });
@@ -230,7 +230,7 @@ const finalEval = (readyForSubmission, setReadyForSubmission, formNameValidated,
     let totalInNeedOfEval = 0;
     if (!Array.isArray(formData)) { //this way it SHOULD work for all 3.
         formData = [formData];
-    }    Object.keys(formData[0]).forEach((key) => {
+    } Object.keys(formData[0]).forEach((key) => {
         if (key[0] === "_") {
             totalInNeedOfEval++;
         }
@@ -245,8 +245,8 @@ const finalEval = (readyForSubmission, setReadyForSubmission, formNameValidated,
                         successes++;
                     }
                 } else if (key === "_endDate" && dataObj['_startDate']) {
-                    if(dataObj["_startDate"]){
-                        if(evalFunctionPairing['_startDate'](dataObj["_startDate"], dataObj["_endDate"])&&dataObj[key]){
+                    if (dataObj["_startDate"]) {
+                        if (evalFunctionPairing['_startDate'](dataObj["_startDate"], dataObj["_endDate"]) && dataObj[key]) {
                             successes++;
                         }
                     }
@@ -280,7 +280,7 @@ const finalEval = (readyForSubmission, setReadyForSubmission, formNameValidated,
         return false;
     }
 }
-function globalFinalEval(completeData, readyForSubmission, setReadyForSubmission){
+function globalFinalEval(completeData, readyForSubmission, setReadyForSubmission, profailpiqchur) {
     const evalFunctionPairingWork = {
         _position: moreThanTwo,
         _employer: moreThanTwo,
@@ -294,7 +294,6 @@ function globalFinalEval(completeData, readyForSubmission, setReadyForSubmission
         _email: emailEval,
         _phoneNumber: numberEval,
         selfDesc: selfDescEval,
-        _photo: photoEval
     }
     const evalFunctionPairingEdu = {
         _educationLevel: moreThanTwo,
@@ -304,7 +303,14 @@ function globalFinalEval(completeData, readyForSubmission, setReadyForSubmission
     }
     finalEval(readyForSubmission, setReadyForSubmission, "workExpValidated", evalFunctionPairingWork, completeData.secondFormData);
     finalEval(readyForSubmission, setReadyForSubmission, "educationValidated", evalFunctionPairingEdu, completeData.lastFormData);
-    finalEval(readyForSubmission, setReadyForSubmission, "privateInfoValidated", evalFunctionPairingPrivate, completeData.firstFormData);
+    if (profailpiqchur) {
+        finalEval(readyForSubmission, setReadyForSubmission, "privateInfoValidated", evalFunctionPairingPrivate, completeData.firstFormData);
+    } else {
+        setReadyForSubmission({
+            ...readyForSubmission,
+            pirvateInfoValidated: false
+        });
+    }
 }
 function ifExistantGetDataFromMainStateAndCheckValidity(evalFunctionPairing, formContent, setFormContent, readyForSubmission, setReadyForSubmission, formNameValidated, completeData) {
     const newObj = formContent;
