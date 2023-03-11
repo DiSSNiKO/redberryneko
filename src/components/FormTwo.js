@@ -1,16 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
-    removeTrailingWhiteSpace,
     getDataFromMain, finalEval,
-    formStateUpdater,
-    noBannedInputs,
-    ifExistantGetDataFromMainStateAndCheckValidity,
-    makeArrayOfNItems,
-    validationStyling,
     moreThanTwo,
     formStateUpdaterDynamicHTML,
-    selfDescEval,
     checkDateStart,
     existantValue,
     photoEval
@@ -48,7 +41,6 @@ function FormTwo(props) {
         }
         finalEval(readyForSubmission, setReadyForSubmission, "workExpValidated", evalFunctionPairing, formContent);
         sessionStorage.setItem("jetBoyRedBerryCompleteData", JSON.stringify(sessionStorageObj));
-        sessionStorage.setItem("jetBoyRedBerryPfp", JSON.stringify(profilePicture));
     });
 
     useEffect(() => {

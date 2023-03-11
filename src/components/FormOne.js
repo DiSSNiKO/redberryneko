@@ -36,7 +36,6 @@ function FormOne(props) {
             firstFormData: formContent
         }
         sessionStorage.setItem("jetBoyRedBerryCompleteData", JSON.stringify(sessionStorageObj));
-        sessionStorage.setItem("jetBoyRedBerryPfp", JSON.stringify(profilePicture));
     });
     useEffect(() => {
         if (justMounted) {

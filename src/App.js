@@ -15,7 +15,6 @@ function App() {
   }
   const [profilePicture, setProfilePicture] = useState(
     JSON.parse(sessionStorage.getItem("jetBoyRedBerryPfp")) || null
-
   )
   const [completeData, setCompleteData] = useState(
     // _VARNAME data with validation, just VARNAME is optional data.
@@ -26,6 +25,13 @@ function App() {
     workExpValidated: false,
     educationValidated: false
   }) //when all 3 are true, CV is ready for POST (Ready in general)
+  useEffect(() => {
+    try {
+      sessionStorage.setItem("jetBoyRedBerryPfp", JSON.stringify(profilePicture));
+    } catch (err) {
+      console.log(alert('Image exceeds allowed size and wont be saved in localStorage!'))
+    }
+  }, [profilePicture]); //Only upload to localStoroge when the pfp is changed 
   useEffect(() => {
     globalFinalEval(completeData, readyForSubmission, setReadyForSubmission, profilePicture);
   }, []);

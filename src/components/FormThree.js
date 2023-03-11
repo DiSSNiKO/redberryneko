@@ -38,7 +38,6 @@ function FormThree(props) {
         }
         finalEval(readyForSubmission, setReadyForSubmission, "educationValidated", evalFunctionPairing, formContent);
         sessionStorage.setItem("jetBoyRedBerryCompleteData", JSON.stringify(sessionStorageObj));
-        sessionStorage.setItem("jetBoyRedBerryPfp", JSON.stringify(profilePicture));
     });
 
     useEffect(() => {
