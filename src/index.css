@@ -571,7 +571,7 @@ body::-webkit-scrollbar-thumb {
 
   .final-cv-cont {
     width: 80%;
-    margin: auto;
+    margin: 2rem auto;
     position: relative;
     justify-content: center;
   }
